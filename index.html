@@ -55,25 +55,26 @@
             background: #030305;
             min-height: 100vh;
             position: relative;
-            box-shadow: 0 0 80px rgba(244, 63, 94, 0.05); /* Glow rouge subtil autour de l'app */
+            box-shadow: 0 0 80px rgba(244, 63, 94, 0.08); /* Glow rouge subtil autour de l'app */
             border-left: 1px solid #1a1a24;
             border-right: 1px solid #1a1a24;
         }
 
         .glass-header {
-            background: rgba(13, 13, 18, 0.7);
+            background: rgba(13, 13, 18, 0.75);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* L'effet WOW sur le logo */
+        /* L'effet WOW de lumière sur le logo (Figma Light Effect) */
         .text-glow-animated {
-            background: linear-gradient(to right, #ffffff 20%, #f43f5e 40%, #f43f5e 60%, #ffffff 80%);
+            background: linear-gradient(to right, #ffffff 20%, #f43f5e 40%, #ff6b81 50%, #f43f5e 60%, #ffffff 80%);
             background-size: 200% auto;
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
+            text-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
         }
 
         /* Auto-scroll containers */
@@ -109,7 +110,7 @@
         }
         .card-premium:hover {
             border-color: #f43f5e;
-            box-shadow: 0 10px 30px -10px rgba(244, 63, 94, 0.2);
+            box-shadow: 0 10px 30px -10px rgba(244, 63, 94, 0.25);
         }
 
         .card-animate {
@@ -128,18 +129,18 @@
         <!-- Header Sticky avec Animation du Logo et Localisation -->
         <header class="glass-header sticky top-0 z-40 px-5 py-4">
             <div class="flex justify-between items-center mb-1">
-                <div class="flex items-center gap-1.5 bg-laserred/10 border border-laserred/20 px-2 py-0.5 rounded-full w-fit">
-                    <i class="fa-solid fa-location-dot text-laserred text-[8px] animate-pulse"></i>
-                    <span id="label-showroom" class="text-[9px] font-bold tracking-widest text-laserred uppercase">Tlemcen, Algérie</span>
+                <div class="flex items-center gap-1.5 bg-laserred/10 border border-laserred/20 px-3 py-1 rounded-full w-fit">
+                    <i class="fa-solid fa-location-dot text-laserred text-[9px] animate-pulse"></i>
+                    <span id="label-showroom" class="text-[9px] font-black tracking-widest text-laserred uppercase">Tlemcen, Algérie</span>
                 </div>
-                <button onclick="toggleAppLanguage()" id="lang-toggle-btn" class="text-[10px] font-bold border border-white/5 bg-white/5 px-3 py-1 rounded-full shadow-sm text-gray-300 hover:bg-white/10 transition active:scale-95">
+                <button onclick="toggleAppLanguage()" id="lang-toggle-btn" class="text-[10px] font-bold border border-white/5 bg-white/5 px-3 py-1 rounded-full shadow-sm text-gray-300 hover:bg-white/10 transition active:scale-95 font-sans">
                     عربية
                 </button>
             </div>
             
-            <div class="flex justify-between items-end mt-1">
-                <h1 class="text-3xl font-black tracking-tighter uppercase leading-none text-glow-animated animate-shimmer" id="brand-logo">
-                    G CARS
+            <div class="flex justify-between items-end mt-1.5">
+                <h1 class="text-3xl font-black uppercase tracking-tighter leading-none text-glow-animated animate-shimmer" id="brand-logo">
+                    G CARS TLEMCEN
                 </h1>
             </div>
         </header>
@@ -193,8 +194,8 @@
             <!-- Scrollable details space -->
             <div class="flex-1 overflow-y-auto hide-scroll pb-28">
                 
-                <!-- Gallery slider (BIG FORMAT) -->
-                <div class="relative h-[420px] bg-black">
+                <!-- Gallery slider (BIG FORMAT h-96 pour les grandes photos) -->
+                <div class="relative h-96 bg-black">
                     <div class="swipe-container h-full w-full" id="modal-gallery-swiper" onscroll="updateGalleryTracker()">
                         <!-- Images dynamically swipeable -->
                     </div>
@@ -203,8 +204,8 @@
                     <div class="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none"></div>
 
                     <div class="absolute bottom-4 left-4 z-10">
-                        <span id="modal-badge-year" class="bg-laserred text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-[0_0_15px_rgba(244,63,94,0.5)]">2018</span>
-                        <h2 id="modal-car-title" class="text-3xl font-black tracking-tight text-white leading-none mt-2">SEAT IBIZA FR</h2>
+                        <span id="modal-badge-year" class="bg-laserred text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-[0_0_15px_rgba(244,63,94,0.5)]">2025</span>
+                        <h2 id="modal-car-title" class="text-3xl font-black tracking-tight text-white leading-none mt-2">VEHICULE</h2>
                     </div>
 
                     <div class="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md border border-white/10 text-white text-[10px] px-3 py-1.5 rounded-full font-bold z-10 flex items-center gap-1.5">
@@ -339,7 +340,7 @@
     <!-- Trade-In Reprise Modal -->
     <div id="repriseSheetModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeRepriseModal()"></div>
-        <div class="relative w-full max-w-[440px] mx-auto h-[90vh] bg-surface rounded-t-3xl border-t border-white/10 flex flex-col bottom-sheet" id="repriseSheet">
+        <div class="relative w-full max-w-[440px] mx-auto h-[90vh] bg-surface rounded-t-3xl border-t border-white/10 flex flex-col bottom-sheet shadow-2xl" id="repriseSheet">
             <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto my-3 shrink-0"></div>
             
             <div class="px-5 py-4 border-b border-white/5 flex justify-between items-center">
@@ -347,40 +348,41 @@
                 <button onclick="closeRepriseModal()" class="w-8 h-8 rounded-full bg-white/5 text-gray-400 flex items-center justify-center hover:bg-laserred hover:text-white transition"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
+            <!-- Reprise Form Scrollable -->
             <div class="flex-1 overflow-y-auto p-5 space-y-5 hide-scroll">
                 <p class="text-xs text-slate-400 font-medium leading-relaxed" id="label-reprise-desc">Proposez votre véhicule actuel. Notre équipe évaluera la différence de prix avec le véhicule souhaité.</p>
                 
                 <div class="space-y-1.5">
                     <label class="text-[10px] text-laserred font-black uppercase tracking-widest" id="label-your-car">Votre véhicule</label>
-                    <input type="text" id="rep-car-name" placeholder="Ex: Clio 4 GT Line" class="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
+                    <input type="text" id="rep-car-name" placeholder="Ex: Clio 4 GT Line" class="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-1.5">
                         <label class="text-[10px] text-slate-400 font-black uppercase tracking-widest" id="label-year">Année</label>
-                        <input type="number" id="rep-car-year" placeholder="Ex: 2019" class="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
+                        <input type="number" id="rep-car-year" placeholder="Ex: 2019" class="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
                     </div>
                     <div class="space-y-1.5">
                         <label class="text-[10px] text-slate-400 font-black uppercase tracking-widest" id="label-km-field">KM</label>
-                        <input type="text" id="rep-car-km" placeholder="Ex: 140 000 km" class="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
+                        <input type="text" id="rep-car-km" placeholder="Ex: 140 000 km" class="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
                     </div>
                 </div>
 
                 <div class="space-y-1.5">
                     <label class="text-[10px] text-slate-400 font-black uppercase tracking-widest" id="label-paint-field">État Peinture</label>
-                    <textarea id="rep-car-paint" placeholder="Ex: Sbiha f l'aile avant m3a l'capot." class="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white h-24 resize-none focus:outline-none focus:border-laserred transition"></textarea>
+                    <textarea id="rep-car-paint" placeholder="Ex: Sbiha f l'aile avant m3a l'capot." class="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white h-24 resize-none focus:outline-none focus:border-laserred transition"></textarea>
                 </div>
 
                 <div class="space-y-1.5">
                     <label class="text-[10px] text-laserred font-black uppercase tracking-widest" id="label-target">Véhicule souhaité</label>
-                    <select id="rep-car-target" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
+                    <select id="rep-car-target" class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
                         <!-- Loaded dynamically -->
                     </select>
                 </div>
             </div>
 
             <div class="p-4 bg-surface/90 backdrop-blur border-t border-white/5 pb-8">
-                <button onclick="sendRepriseMessage()" class="w-full bg-laserred text-white font-black py-4 rounded-2xl shadow-[0_10px_20px_-10px_rgba(244,63,94,0.5)] text-sm tactile-btn uppercase tracking-wide" id="btn-submit-proposal">
+                <button onclick="sendRepriseMessage()" class="w-full bg-laserred text-white font-bold py-4 rounded-2xl shadow-[0_10px_20px_-10px_rgba(244,63,94,0.5)] text-sm tactile-btn uppercase tracking-wide" id="btn-submit-proposal">
                     Envoyer l'offre
                 </button>
             </div>
@@ -400,8 +402,8 @@
         const voitures = [
             {
                 id: 1, marque: "RENAULT", modele: "AUSTRALE", annee: "2025", prix: "Negociable", km: "23000 km", moteur: "1.3 E H 160 CV", boite: "AUTOMATIQUE ", couleur: "GRIS MATE",
-               La tôle: "N9iya (00 Peinture)", sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
-                images: ["RENAULT 1.jfif", "RENAULT 2.jfif", "RENAULT 3.jfif", "RENAULT 4.jfif", "RENAULT 5.jfif", "RENAULT 6.jfif", "RENAULT 7.jfif", "RENAULT 8.jfif", "RENAULT 9.jfif",]
+                sbiha: "N9iya (00 Peinture)", sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
+                images: ["RENAULT 1.jfif", "RENAULT 2.jfif", "RENAULT 3.jfif", "RENAULT 4.jfif", "RENAULT 5.jfif", "RENAULT 6.jfif", "RENAULT 7.jfif", "RENAULT 8.jfif", "RENAULT 9.jfif", "RENAULT 10.jfif"]
             },
             {
                 id: 2, marque: "Renault", modele: "Clio 4 GT Line", annee: "2019", prix: "Negociable", km: "140 000 km", moteur: "1.5 DCI 85ch", boite: "Manuelle", couleur: "Gris",
@@ -453,7 +455,8 @@
                 successToast: "Envoyé avec succès !", errorFields: "Champs requis !",
                 homeNav: "Découvrir", exchangeNav: "Échange",
                 legendPainted: "Zone Peinte (Retouche)", legendClean: "Zone d'origine",
-                swipeLabel: "Glisser", touchDetails: "Toucher pour les détails"
+                swipeLabel: "Glisser", touchDetails: "Toucher pour les détails",
+                price: "Prix demandé"
             },
             ar: {
                 showroom: "تلمسان، الجزائر",
@@ -471,7 +474,8 @@
                 successToast: "تم الإرسال بنجاح !", errorFields: "يرجى ملء الحقول !",
                 homeNav: "اكتشف", exchangeNav: "تبديل",
                 legendPainted: "منطقة صبيغة", legendClean: "منطقة أصلية",
-                swipeLabel: "اسحب", touchDetails: "اضغط للتفاصيل"
+                swipeLabel: "اسحب", touchDetails: "اضغط للتفاصيل",
+                price: "السعر المطلوب"
             }
         };
 
@@ -496,11 +500,9 @@
             if (currentLang === 'ar') {
                 htmlTag.setAttribute('dir', 'rtl');
                 document.body.style.fontFamily = "'Tajawal', sans-serif";
-                document.getElementById('brand-logo').classList.remove('tracking-tighter');
             } else {
                 htmlTag.setAttribute('dir', 'ltr');
                 document.body.style.fontFamily = "'Outfit', sans-serif";
-                document.getElementById('brand-logo').classList.add('tracking-tighter');
             }
 
             document.getElementById('label-showroom').innerText = translations[currentLang].showroom;
@@ -526,6 +528,7 @@
             document.getElementById('label-paint-field').innerText = translations[currentLang].peintureLabel;
             document.getElementById('label-target').innerText = translations[currentLang].targetLabel;
             document.getElementById('btn-submit-proposal').innerText = translations[currentLang].sendProposal;
+            document.getElementById('label-price').innerText = translations[currentLang].price;
 
             renderBrandPills();
             renderCars();
