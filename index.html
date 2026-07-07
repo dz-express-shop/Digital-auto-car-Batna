@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>G CARS TLEMCEN | Masterpiece Edition</title>
+    <title>G CARS TLEMCEN | L'Élite de l'Automobile</title>
     
     <!-- TailWind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,7 +16,21 @@
                         surface: '#0d0d12',
                         bordercolor: '#1a1a24',
                         laserred: '#f43f5e',
-                        redglow: 'rgba(244, 63, 94, 0.15)'
+                    },
+                    animation: {
+                        'shimmer': 'shimmer 3s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        shimmer: {
+                            '0%': { backgroundPosition: '200% center' },
+                            '100%': { backgroundPosition: '-200% center' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        }
                     }
                 }
             }
@@ -24,7 +38,6 @@
     </script>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts: Outfit pour le luxe, Alexandria pour l'Arabe premium -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Alexandria:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
     <style>
@@ -33,41 +46,44 @@
             color: #f4f4f5;
             font-family: 'Outfit', 'Alexandria', sans-serif;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             padding-bottom: 90px;
         }
 
-        /* Container centré pour simuler un smartphone sur PC */
         .mobile-viewport {
             max-width: 440px;
             margin: 0 auto;
             background: #030305;
             min-height: 100vh;
             position: relative;
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 80px rgba(244, 63, 94, 0.05); /* Glow rouge subtil autour de l'app */
             border-left: 1px solid #1a1a24;
             border-right: 1px solid #1a1a24;
         }
 
-        /* Glassmorphic elements */
         .glass-header {
-            background: rgba(13, 13, 18, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(13, 13, 18, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Hide Scrollbar */
-        .hide-scroll::-webkit-scrollbar { display: none; }
-        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        /* L'effet WOW sur le logo */
+        .text-glow-animated {
+            background: linear-gradient(to right, #ffffff 20%, #f43f5e 40%, #f43f5e 60%, #ffffff 80%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
 
-        /* Swipeable Gallery */
+        /* Auto-scroll containers */
         .swipe-container {
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
+            scroll-behavior: smooth;
         }
         .swipe-container::-webkit-scrollbar { display: none; }
         .swipe-slide {
@@ -75,27 +91,33 @@
             scroll-snap-align: center;
         }
 
-        /* iOS Bottom Sheet style */
         .bottom-sheet {
             transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            border-radius: 28px 28px 0 0;
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            border-radius: 32px 32px 0 0;
             background: #0d0d12;
-            border-top: 1px solid #1a1a24;
+            border-top: 1px solid #27272a;
         }
         .bottom-sheet.active {
             transform: translateY(0);
         }
 
-        /* Card Scale Interactive animation */
-        .car-card-premium {
-            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        .card-premium {
+            background: linear-gradient(145deg, #0d0d12 0%, #111116 100%);
+            border: 1px solid #1a1a24;
+            transition: all 0.3s ease;
+        }
+        .card-premium:hover {
+            border-color: #f43f5e;
+            box-shadow: 0 10px 30px -10px rgba(244, 63, 94, 0.2);
         }
 
-        /* Visual Switcher Tab */
-        .tab-btn.active {
-            color: #f43f5e;
-            border-bottom-color: #f43f5e;
+        .card-animate {
+            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -103,51 +125,55 @@
 
     <div class="mobile-viewport">
         
-        <!-- Header Sticky -->
-        <header class="glass-header sticky top-0 z-40 flex justify-between items-center px-5 py-4">
-            <div>
-                <span id="label-showroom" class="text-[9px] font-bold tracking-[0.3em] text-laserred block uppercase">Showroom Premium</span>
-                <h1 class="text-2xl font-black tracking-tight text-white leading-none">G CARS<span class="text-laserred">.</span>TLEMCEN</h1>
+        <!-- Header Sticky avec Animation du Logo et Localisation -->
+        <header class="glass-header sticky top-0 z-40 px-5 py-4">
+            <div class="flex justify-between items-center mb-1">
+                <div class="flex items-center gap-1.5 bg-laserred/10 border border-laserred/20 px-2 py-0.5 rounded-full w-fit">
+                    <i class="fa-solid fa-location-dot text-laserred text-[8px] animate-pulse"></i>
+                    <span id="label-showroom" class="text-[9px] font-bold tracking-widest text-laserred uppercase">Tlemcen, Algérie</span>
+                </div>
+                <button onclick="toggleAppLanguage()" id="lang-toggle-btn" class="text-[10px] font-bold border border-white/5 bg-white/5 px-3 py-1 rounded-full shadow-sm text-gray-300 hover:bg-white/10 transition active:scale-95">
+                    عربية
+                </button>
             </div>
-            <!-- Arabic / French Translation switch button -->
-            <button onclick="toggleAppLanguage()" id="lang-toggle-btn" class="text-xs font-bold border border-white/5 bg-white/5 px-3 py-1.5 rounded-full shadow-sm text-gray-300 hover:bg-white/10 transition active:scale-95">
-                عربية
-            </button>
+            
+            <div class="flex justify-between items-end mt-1">
+                <h1 class="text-3xl font-black tracking-tighter uppercase leading-none text-glow-animated animate-shimmer" id="brand-logo">
+                    G CARS
+                </h1>
+            </div>
         </header>
 
-        <!-- Search and Quick Category filter -->
+        <!-- Barre de recherche et Filtres -->
         <div class="px-4 pt-4 space-y-3">
-            <!-- Search bar with suggestions -->
             <div class="relative">
                 <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-sm"></i>
-                <input type="text" id="app-search-input" oninput="filterCars()" placeholder="Rechercher une marque, sbiha, prix..." class="w-full bg-surface border border-white/5 rounded-xl pl-10 pr-4 py-3 text-xs font-medium text-white placeholder-slate-500 shadow-sm focus:outline-none focus:border-laserred transition-colors">
+                <input type="text" id="app-search-input" oninput="filterCars()" placeholder="Rechercher marque, sbiha, prix..." class="w-full bg-surface border border-white/5 rounded-2xl pl-10 pr-4 py-3 text-xs font-medium text-white placeholder-slate-600 focus:outline-none focus:border-laserred transition-colors shadow-inner">
             </div>
-
-            <!-- Scrollable brand selection pills generated dynamically -->
             <div class="flex overflow-x-auto gap-2 hide-scroll py-1" id="brands-scroll-container">
                 <!-- Dynamically loaded brands -->
             </div>
         </div>
 
-        <!-- Main Scrollable Catalog Feed -->
-        <main class="p-4 space-y-4" id="cars-feed-list">
-            <!-- Active cards loaded dynamically from state -->
+        <!-- Catalogue Feed -->
+        <main class="p-4 space-y-5" id="cars-feed-list">
+            <!-- Cards loaded dynamically -->
         </main>
 
-        <!-- Dynamic Bottom Navigation PWA Style -->
+        <!-- Navigation Bottom -->
         <nav class="glass-header fixed bottom-0 w-full max-w-[440px] flex justify-around items-center pt-3 pb-6 z-40">
-            <button onclick="scrollToTop()" class="flex flex-col items-center text-laserred">
-                <i class="fa-solid fa-layer-group text-lg mb-1"></i>
-                <span id="nav-home" class="text-[9px] font-bold tracking-widest uppercase">Showroom</span>
+            <button onclick="scrollToTop()" class="flex flex-col items-center text-laserred transition hover:-translate-y-1">
+                <i class="fa-solid fa-compass text-lg mb-1"></i>
+                <span id="nav-home" class="text-[9px] font-bold tracking-widest uppercase">Découvrir</span>
             </button>
-            <button onclick="openRepriseModal()" class="flex flex-col items-center text-gray-400 hover:text-white transition">
-                <i class="fa-solid fa-arrow-right-arrow-left text-lg mb-1"></i>
+            <button onclick="openRepriseModal()" class="flex flex-col items-center text-gray-500 hover:text-white transition hover:-translate-y-1">
+                <i class="fa-solid fa-rotate text-lg mb-1"></i>
                 <span id="nav-exchange" class="text-[9px] font-bold tracking-widest uppercase">Échange</span>
             </button>
-            <!-- METTRE LE NUMERO DU CLIENT HNA TA3 G CARS DIRECT -->
-            <a href="https://wa.me/213550000000" target="_blank" class="flex flex-col items-center text-gray-400 hover:text-green-500 transition">
+            <!-- LE NUMERO DU CLIENT -->
+            <a href="https://wa.me/213550000000" target="_blank" class="flex flex-col items-center text-gray-500 hover:text-green-500 transition hover:-translate-y-1">
                 <i class="fa-brands fa-whatsapp text-xl mb-1"></i>
-                <span class="text-[9px] font-bold tracking-widest uppercase">WhatsApp</span>
+                <span class="text-[9px] font-bold tracking-widest uppercase">Contact</span>
             </a>
         </nav>
 
@@ -155,80 +181,75 @@
 
     <!-- Car Detail Sheet Modal -->
     <div id="carDetailModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
-        <!-- Overlay backdrop with blur -->
-        <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeCarDetails()"></div>
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeCarDetails()"></div>
 
-        <!-- The Sliding Sheet -->
-        <div class="relative w-full max-w-[440px] mx-auto h-[94vh] flex flex-col bottom-sheet" id="modalContainer">
-            
-            <!-- iOS Indicator drag line -->
-            <div class="w-12 h-1 bg-white/10 rounded-full mx-auto my-3 shrink-0"></div>
+        <div class="relative w-full max-w-[440px] mx-auto h-[96vh] flex flex-col bottom-sheet shadow-2xl" id="modalContainer">
+            <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto my-3 shrink-0"></div>
 
-            <!-- Absolute Close button -->
-            <button onclick="closeCarDetails()" class="absolute top-3 right-4 w-8 h-8 rounded-full bg-white/5 border border-white/10 text-white flex items-center justify-center hover:bg-white/10 z-50">
+            <button onclick="closeCarDetails()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 backdrop-blur text-white flex items-center justify-center hover:bg-laserred transition z-50 border border-white/10">
                 <i class="fa-solid fa-xmark text-sm"></i>
             </button>
 
             <!-- Scrollable details space -->
             <div class="flex-1 overflow-y-auto hide-scroll pb-28">
                 
-                <!-- Gallery slider with Counter (HAUTEUR AGRANDIE H-96 FORMAT PRO) -->
-                <div class="relative h-96 bg-black/30 overflow-hidden">
+                <!-- Gallery slider (BIG FORMAT) -->
+                <div class="relative h-[420px] bg-black">
                     <div class="swipe-container h-full w-full" id="modal-gallery-swiper" onscroll="updateGalleryTracker()">
                         <!-- Images dynamically swipeable -->
                     </div>
-                    <div class="absolute bottom-4 left-4 bg-black/70 backdrop-blur border border-white/5 px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wider text-gray-300 z-10">
-                        <i class="fa-solid fa-image mr-1 text-laserred"></i> <span id="gallery-counter">1 / 1</span>
+                    
+                    <!-- Gradient overlay for text readability -->
+                    <div class="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none"></div>
+
+                    <div class="absolute bottom-4 left-4 z-10">
+                        <span id="modal-badge-year" class="bg-laserred text-white text-[10px] font-black px-3 py-1 rounded uppercase tracking-widest shadow-[0_0_15px_rgba(244,63,94,0.5)]">2018</span>
+                        <h2 id="modal-car-title" class="text-3xl font-black tracking-tight text-white leading-none mt-2">SEAT IBIZA FR</h2>
                     </div>
-                    <div class="absolute bottom-4 right-4 bg-laserred/20 border border-laserred/30 text-laserred text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider z-10" id="badge-swipe-indicator">
-                        Glisser l'image <i class="fa-solid fa-arrow-right-arrow-left ml-1"></i>
+
+                    <div class="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md border border-white/10 text-white text-[10px] px-3 py-1.5 rounded-full font-bold z-10 flex items-center gap-1.5">
+                        <i class="fa-solid fa-images text-laserred"></i> <span id="gallery-counter">1 / 1</span>
                     </div>
                 </div>
 
-                <!-- Car Meta Header -->
-                <div class="p-5 border-b border-white/5">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span id="modal-badge-year" class="bg-laserred/10 border border-laserred/20 text-laserred text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-wider block w-fit mb-2">2018</span>
-                            <h2 id="modal-car-title" class="text-2xl font-black tracking-tight text-white leading-none">SEAT IBIZA FR</h2>
-                        </div>
-                        <span id="modal-car-price" class="text-xl font-black bg-laserred/10 border border-laserred/20 px-3.5 py-2 rounded-xl text-laserred">00 Millions</span>
-                    </div>
+                <div class="p-5 border-b border-white/5 flex justify-between items-center bg-surface">
+                    <span class="text-gray-400 text-xs font-bold uppercase tracking-widest" id="label-price">Prix demandé</span>
+                    <span id="modal-car-price" class="text-xl font-black text-white bg-laserred/20 border border-laserred/30 px-4 py-2 rounded-xl">00 Millions</span>
                 </div>
 
-                <!-- Custom Navigation Tabs for Specs, Peinture, Mourabaha -->
-                <div class="flex border-b border-white/5 bg-surface/50 text-center text-xs font-bold">
-                    <button onclick="activateSheetTab('specs')" id="tab-specs" class="tab-btn flex-1 py-3.5 border-b-2 border-transparent text-gray-400 transition">FICHE TECHNIQUE</button>
-                    <button onclick="activateSheetTab('paint')" id="tab-paint" class="tab-btn flex-1 py-3.5 border-b-2 border-transparent text-gray-400 transition">SBIHA / PEINTURE</button>
-                    <button onclick="activateSheetTab('finance')" id="tab-finance" class="tab-btn flex-1 py-3.5 border-b-2 border-transparent text-gray-400 transition">MOURABAHA</button>
+                <!-- Custom Navigation Tabs -->
+                <div class="flex border-b border-white/5 bg-surface text-center text-[10px] font-extrabold uppercase tracking-wider">
+                    <button onclick="activateSheetTab('specs')" id="tab-specs" class="tab-btn flex-1 py-4 border-b-2 border-transparent text-gray-500 transition">Fiche Auto</button>
+                    <button onclick="activateSheetTab('paint')" id="tab-paint" class="tab-btn flex-1 py-4 border-b-2 border-transparent text-gray-500 transition">La Tôle</button>
+                    <button onclick="activateSheetTab('finance')" id="tab-finance" class="tab-btn flex-1 py-4 border-b-2 border-transparent text-gray-500 transition">Islamique</button>
                 </div>
 
                 <!-- Tab: Fiche Specifications -->
                 <div id="tab-pane-specs" class="p-5 space-y-4">
                     <div class="grid grid-cols-2 gap-3 text-xs">
-                        <div class="bg-surface border border-white/5 p-3.5 rounded-xl flex items-center gap-3">
-                            <div class="w-8 h-8 bg-black/40 rounded-lg flex items-center justify-center text-laserred shadow-sm"><i class="fa-solid fa-gauge"></i></div>
+                        <div class="bg-surface border border-white/5 p-4 rounded-2xl flex items-center gap-3">
+                            <div class="w-9 h-9 bg-laserred/10 rounded-xl flex items-center justify-center text-laserred"><i class="fa-solid fa-gauge-high"></i></div>
                             <div>
-                                <span class="text-[9px] text-gray-500 uppercase block font-bold" id="label-km">Kilométrage</span>
+                                <span class="text-[9px] text-gray-500 uppercase block font-bold" id="label-km">KM</span>
                                 <strong id="pane-km" class="text-sm font-extrabold text-white">00 km</strong>
                             </div>
                         </div>
-                        <div class="bg-surface border border-white/5 p-3.5 rounded-xl flex items-center gap-3">
-                            <div class="w-8 h-8 bg-black/40 rounded-lg flex items-center justify-center text-laserred shadow-sm"><i class="fa-solid fa-car"></i></div>
+                        <div class="bg-surface border border-white/5 p-4 rounded-2xl flex items-center gap-3">
+                            <div class="w-9 h-9 bg-laserred/10 rounded-xl flex items-center justify-center text-laserred"><i class="fa-solid fa-car-side"></i></div>
                             <div>
                                 <span class="text-[9px] text-gray-500 uppercase block font-bold" id="label-boite">Boîte</span>
                                 <strong id="pane-transmission" class="text-sm font-extrabold text-white">Manuelle</strong>
                             </div>
                         </div>
-                        <div class="bg-surface border border-white/5 p-3.5 rounded-xl flex items-center gap-3">
-                            <div class="w-8 h-8 bg-black/40 rounded-lg flex items-center justify-center text-laserred shadow-sm"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="bg-surface border border-white/5 p-4 rounded-2xl flex items-center gap-3">
+                            <div class="w-9 h-9 bg-laserred/10 rounded-xl flex items-center justify-center text-laserred"><i class="fa-solid fa-gas-pump"></i></div>
                             <div>
                                 <span class="text-[9px] text-gray-500 uppercase block font-bold" id="label-moteur">Moteur</span>
                                 <strong id="pane-engine" class="text-sm font-extrabold text-white">1.6 MPI</strong>
                             </div>
                         </div>
-                        <div class="bg-surface border border-white/5 p-3.5 rounded-xl flex items-center gap-3">
-                            <div class="w-8 h-8 bg-black/40 rounded-lg flex items-center justify-center text-laserred shadow-sm"><i class="fa-solid fa-palette"></i></div>
+                        <div class="bg-surface border border-white/5 p-4 rounded-2xl flex items-center gap-3">
+                            <div class="w-9 h-9 bg-laserred/10 rounded-xl flex items-center justify-center text-laserred"><i class="fa-solid fa-palette"></i></div>
                             <div>
                                 <span class="text-[9px] text-gray-500 uppercase block font-bold" id="label-couleur">Couleur</span>
                                 <strong id="pane-color" class="text-sm font-extrabold text-white">Blanc</strong>
@@ -239,36 +260,36 @@
 
                 <!-- Tab: Peinture / Sbiha System -->
                 <div id="tab-pane-paint" class="p-5 space-y-4 hidden">
-                    <div class="bg-surface border border-white/5 rounded-2xl p-4">
-                        <div class="flex justify-between items-center mb-3">
-                            <h4 class="text-xs font-bold text-gray-300 uppercase" id="label-sbiha-title">Localisation Peinture (Sbiha)</h4>
-                            <span class="bg-laserred/20 border border-laserred/30 text-laserred text-[10px] font-bold px-2 py-0.5 rounded uppercase" id="badge-sbiha">Sbiha</span>
+                    <div class="bg-surface border border-white/5 rounded-3xl p-5 shadow-inner">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-xs font-bold text-white uppercase tracking-widest" id="label-sbiha-title">Scanner Tôle</h4>
+                            <span class="bg-laserred/20 border border-laserred/30 text-laserred text-[9px] font-black px-2.5 py-1 rounded uppercase animate-pulse">Sbiha</span>
                         </div>
                         
-                        <!-- Real Car SVG Visual Blueprint indicator for Algerian Buyers -->
-                        <div class="flex justify-center py-2 bg-black/40 rounded-xl border border-white/5 mb-4">
+                        <!-- Real Car SVG Visual Blueprint -->
+                        <div class="flex justify-center py-4 bg-[#0a0a0f] rounded-2xl border border-white/5 mb-5 shadow-inner">
                             <svg class="w-56 h-auto" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="100" cy="95" r="18" fill="#1a1a24" stroke="#27272a" stroke-width="3"/>
                                 <circle cx="100" cy="95" r="8" fill="#52525b"/>
                                 <circle cx="300" cy="95" r="18" fill="#1a1a24" stroke="#27272a" stroke-width="3"/>
                                 <circle cx="300" cy="95" r="8" fill="#52525b"/>
                                 
-                                <path id="svg-hood" d="M30 65 L80 45 L110 45 L110 65 Z" fill="#1a1a24" stroke="#3f3f46" stroke-width="2" class="transition-all"/>
+                                <path id="svg-hood" d="M30 65 L80 45 L110 45 L110 65 Z" fill="#1a1a24" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
                                 <path d="M110 45 L150 20 L170 20 L170 45 Z" fill="#3f3f46" opacity="0.4" stroke="#3f3f46" stroke-width="2"/>
-                                <path id="svg-front-door" d="M170 20 L230 20 L230 85 L170 85 Z" fill="#1a1a24" stroke="#3f3f46" stroke-width="2" class="transition-all"/>
-                                <path id="svg-back-door" d="M230 20 L285 22 L285 85 L230 85 Z" fill="#1a1a24" stroke="#3f3f46" stroke-width="2" class="transition-all"/>
-                                <path id="svg-back-wing" d="M285 22 L340 45 L370 65 L370 85 L285 85 Z" fill="#1a1a24" stroke="#3f3f46" stroke-width="2" class="transition-all"/>
-                                <path id="svg-front-wing" d="M30 65 L30 85 L80 85 L80 65 Z" fill="#1a1a24" stroke="#3f3f46" stroke-width="2" class="transition-all"/>
+                                <path id="svg-front-door" d="M170 20 L230 20 L230 85 L170 85 Z" fill="#1a1a24" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
+                                <path id="svg-back-door" d="M230 20 L285 22 L285 85 L230 85 Z" fill="#1a1a24" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
+                                <path id="svg-back-wing" d="M285 22 L340 45 L370 65 L370 85 L285 85 Z" fill="#1a1a24" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
+                                <path id="svg-front-wing" d="M30 65 L30 85 L80 85 L80 65 Z" fill="#1a1a24" stroke="#3f3f46" stroke-width="2" class="transition-colors duration-500"/>
                                 <path d="M150 20 L270 20 L285 45 L170 45 Z" fill="#1a1a24" stroke="#3f3f46" stroke-width="2" opacity="0.7"/>
                             </svg>
                         </div>
                         
-                        <div class="text-xs text-slate-400 space-y-1">
-                            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-laserred inline-block"></span> <span id="label-legend-painted">Zone Peinte (Sbiha / Retouche)</span></div>
-                            <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-zinc-700 inline-block"></span> <span id="label-legend-clean">Zone saine (00 Retouches)</span></div>
+                        <div class="text-[10px] text-slate-400 space-y-2 font-medium">
+                            <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-laserred inline-block shadow-[0_0_10px_rgba(244,63,94,0.5)]"></span> <span id="label-legend-painted">Zone Peinte (Sbiha / Retouche)</span></div>
+                            <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-zinc-800 inline-block"></span> <span id="label-legend-clean">Zone d'origine (00 Retouches)</span></div>
                         </div>
 
-                        <p id="paint-verdict-text" class="text-xs font-bold text-gray-300 bg-black/40 border border-white/5 p-3 rounded-lg mt-3 leading-relaxed border-l-4 border-laserred">
+                        <p id="paint-verdict-text" class="text-xs font-bold text-white bg-laserred/10 border border-laserred/20 p-4 rounded-xl mt-5 leading-relaxed border-l-4 border-l-laserred shadow-sm">
                             -
                         </p>
                     </div>
@@ -276,30 +297,28 @@
 
                 <!-- Tab: Mourabaha Calculator -->
                 <div id="tab-pane-finance" class="p-5 space-y-4 hidden">
-                    <div class="bg-surface border border-white/5 rounded-2xl p-4 space-y-4">
+                    <div class="bg-surface border border-white/5 rounded-3xl p-5 space-y-5 shadow-inner">
                         <div class="flex justify-between items-center">
-                            <h4 class="text-xs font-bold text-gray-300 uppercase" id="label-finance-title">Simulation Banque Islamique</h4>
-                            <span class="bg-green-500/10 text-green-400 text-[10px] font-bold px-2 py-0.5 rounded border border-green-500/20" id="badge-finance-free">Sans Intérêt</span>
+                            <h4 class="text-xs font-black text-white uppercase tracking-widest" id="label-finance-title">Simulateur</h4>
+                            <span class="bg-emerald-500/10 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-500/20" id="badge-finance-free">0% Riba</span>
                         </div>
 
-                        <!-- Apport selector slider -->
-                        <div class="space-y-1.5">
+                        <div class="space-y-2">
                             <div class="flex justify-between items-center text-xs">
-                                <span class="text-slate-400 font-bold" id="label-apport">Apport Initial (Avance)</span>
-                                <span id="finance-percent-display" class="text-laserred font-extrabold text-sm">30%</span>
+                                <span class="text-slate-400 font-bold" id="label-apport">Apport Initial</span>
+                                <span id="finance-percent-display" class="text-laserred font-black text-lg">30%</span>
                             </div>
-                            <input type="range" id="apport-slider" min="30" max="80" value="30" step="5" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-laserred" oninput="runFinancingCalculation()">
+                            <input type="range" id="apport-slider" min="30" max="80" value="30" step="5" class="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-laserred" oninput="runFinancingCalculation()">
                         </div>
 
-                        <!-- Finance summary details -->
-                        <div class="border-t border-white/5 pt-3.5 space-y-3 text-xs">
+                        <div class="border-t border-white/5 pt-4 space-y-4 text-xs">
                             <div class="flex justify-between items-center">
-                                <span class="text-slate-400 font-medium" id="label-apport-cash">Montant Apport :</span>
-                                <strong id="finance-apport-cash" class="text-white text-sm">0 Millions</strong>
+                                <span class="text-slate-400 font-medium" id="label-apport-cash">Montant Avance :</span>
+                                <strong id="finance-apport-cash" class="text-white text-sm font-black">0 Millions</strong>
                             </div>
-                            <div class="flex justify-between items-center bg-laserred/5 p-3 rounded-xl border border-laserred/10">
-                                <span class="text-slate-300 font-semibold" id="label-mensuel">Mensualités (60 mois) :</span>
-                                <strong id="finance-monthly" class="text-laserred text-base font-black">0 Millions / Mois</strong>
+                            <div class="flex justify-between items-center bg-black/40 p-4 rounded-2xl border border-white/5 shadow-inner">
+                                <span class="text-slate-400 font-bold" id="label-mensuel">Mensualités (60 mois) :</span>
+                                <strong id="finance-monthly" class="text-laserred text-lg font-black">0 Millions</strong>
                             </div>
                         </div>
                     </div>
@@ -308,72 +327,71 @@
             </div>
 
             <!-- Sticky CTA Footer Inside Sheet -->
-            <div class="absolute bottom-0 w-full p-4 bg-surface/90 backdrop-blur-md border-t border-white/5 pb-8 flex gap-3 z-50">
-                <a id="action-whatsapp-link" href="#" target="_blank" class="flex-1 bg-[#25D366] text-white font-extrabold py-3.5 rounded-xl flex items-center justify-center shadow-lg hover:scale-[1.02] active:scale-95 transition-all text-xs">
-                    <i class="fa-brands fa-whatsapp text-lg mr-2"></i> <span id="label-cta-negotiate">Négocier le Prix sur WhatsApp</span>
+            <div class="absolute bottom-0 w-full p-4 bg-surface/90 backdrop-blur-md border-t border-white/5 pb-8 flex z-50">
+                <a id="action-whatsapp-link" href="#" target="_blank" class="w-full bg-[#25D366] text-white font-black py-4 rounded-2xl flex items-center justify-center shadow-[0_10px_20px_-10px_rgba(37,211,102,0.5)] hover:scale-[1.02] active:scale-95 transition-all text-sm uppercase tracking-wide">
+                    <i class="fa-brands fa-whatsapp text-xl mr-2"></i> <span id="label-cta-negotiate">Contacter le Vendeur</span>
                 </a>
             </div>
 
         </div>
     </div>
 
-    <!-- Interactive Trade-In (Reprise) Modal -->
+    <!-- Trade-In Reprise Modal -->
     <div id="repriseSheetModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeRepriseModal()"></div>
-        <div class="relative w-full max-w-[440px] mx-auto h-[88vh] bg-surface rounded-t-3xl border-t border-white/5 flex flex-col bottom-sheet" id="repriseSheet">
-            <div class="w-10 h-1 bg-white/10 rounded-full mx-auto my-3 shrink-0"></div>
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeRepriseModal()"></div>
+        <div class="relative w-full max-w-[440px] mx-auto h-[90vh] bg-surface rounded-t-3xl border-t border-white/10 flex flex-col bottom-sheet" id="repriseSheet">
+            <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto my-3 shrink-0"></div>
             
-            <div class="px-5 py-3 border-b border-white/5 flex justify-between items-center">
-                <h3 class="text-lg font-black text-white" id="label-reprise-title">Proposer un Échange (Reprise)</h3>
-                <button onclick="closeRepriseModal()" class="w-8 h-8 rounded-full bg-white/5 text-gray-400 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            <div class="px-5 py-4 border-b border-white/5 flex justify-between items-center">
+                <h3 class="text-xl font-black text-white" id="label-reprise-title">Système d'Échange</h3>
+                <button onclick="closeRepriseModal()" class="w-8 h-8 rounded-full bg-white/5 text-gray-400 flex items-center justify-center hover:bg-laserred hover:text-white transition"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <!-- Reprise Form Scrollable -->
-            <div class="flex-1 overflow-y-auto p-5 space-y-4">
-                <p class="text-xs text-slate-400 font-medium" id="label-reprise-desc">Saisissez les informations de votre véhicule. G CARS TLEMCEN étudiera votre offre et vous contactera rapidement.</p>
+            <div class="flex-1 overflow-y-auto p-5 space-y-5 hide-scroll">
+                <p class="text-xs text-slate-400 font-medium leading-relaxed" id="label-reprise-desc">Proposez votre véhicule actuel. Notre équipe évaluera la différence de prix avec le véhicule souhaité.</p>
                 
-                <div class="space-y-1">
-                    <label class="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider" id="label-your-car">Votre voiture (Marque / Modèle)</label>
-                    <input type="text" id="rep-car-name" placeholder="Ex: Clio 4 GT Line" class="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-laserred">
+                <div class="space-y-1.5">
+                    <label class="text-[10px] text-laserred font-black uppercase tracking-widest" id="label-your-car">Votre véhicule</label>
+                    <input type="text" id="rep-car-name" placeholder="Ex: Clio 4 GT Line" class="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
                 </div>
 
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="space-y-1">
-                        <label class="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider" id="label-year">Année</label>
-                        <input type="number" id="rep-car-year" placeholder="Ex: 2019" class="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-laserred">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] text-slate-400 font-black uppercase tracking-widest" id="label-year">Année</label>
+                        <input type="number" id="rep-car-year" placeholder="Ex: 2019" class="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
                     </div>
-                    <div class="space-y-1">
-                        <label class="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider" id="label-km-field">Kilométrage</label>
-                        <input type="text" id="rep-car-km" placeholder="Ex: 140 000 km" class="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-laserred">
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] text-slate-400 font-black uppercase tracking-widest" id="label-km-field">KM</label>
+                        <input type="text" id="rep-car-km" placeholder="Ex: 140 000 km" class="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
                     </div>
                 </div>
 
-                <div class="space-y-1">
-                    <label class="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider" id="label-paint-field">État de la tôle (Peinture)</label>
-                    <textarea id="rep-car-paint" placeholder="Ex: Sbiha f l'aile avant m3a l'capot." class="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-3 text-xs text-white h-20 resize-none focus:outline-none focus:border-laserred"></textarea>
+                <div class="space-y-1.5">
+                    <label class="text-[10px] text-slate-400 font-black uppercase tracking-widest" id="label-paint-field">État Peinture</label>
+                    <textarea id="rep-car-paint" placeholder="Ex: Sbiha f l'aile avant m3a l'capot." class="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3.5 text-sm text-white h-24 resize-none focus:outline-none focus:border-laserred transition"></textarea>
                 </div>
 
-                <div class="space-y-1">
-                    <label class="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider" id="label-target">Véhicule souhaité chez G CARS</label>
-                    <select id="rep-car-target" class="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-laserred">
+                <div class="space-y-1.5">
+                    <label class="text-[10px] text-laserred font-black uppercase tracking-widest" id="label-target">Véhicule souhaité</label>
+                    <select id="rep-car-target" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-laserred transition">
                         <!-- Loaded dynamically -->
                     </select>
                 </div>
             </div>
 
-            <div class="p-4 bg-surface border-t border-white/5 pb-8">
-                <button onclick="sendRepriseMessage()" class="w-full bg-laserred text-white font-bold py-3.5 rounded-xl shadow-lg shadow-laserred/10 text-xs tactile-btn" id="btn-submit-proposal">
-                    <i class="fa-brands fa-whatsapp text-lg mr-2"></i> Envoyer ma proposition sur WhatsApp
+            <div class="p-4 bg-surface/90 backdrop-blur border-t border-white/5 pb-8">
+                <button onclick="sendRepriseMessage()" class="w-full bg-laserred text-white font-black py-4 rounded-2xl shadow-[0_10px_20px_-10px_rgba(244,63,94,0.5)] text-sm tactile-btn uppercase tracking-wide" id="btn-submit-proposal">
+                    Envoyer l'offre
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Notification Toast System -->
-    <div id="toastAlert" class="fixed top-6 left-1/2 -translate-x-1/2 z-[100] transform -translate-y-20 opacity-0 transition-all duration-300">
-        <div class="bg-surface border border-white/10 text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-2">
-            <i class="fa-solid fa-circle-check text-green-400"></i>
-            <span id="toast-txt" class="font-bold text-xs">Succès</span>
+    <!-- Notification Toast -->
+    <div id="toastAlert" class="fixed top-8 left-1/2 -translate-x-1/2 z-[100] transform -translate-y-24 opacity-0 transition-all duration-500">
+        <div class="bg-surface border border-white/10 text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-3">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+            <span id="toast-txt" class="font-bold text-sm tracking-wide">Succès</span>
         </div>
     </div>
 
@@ -381,215 +399,79 @@
         // High quality database optimized for G CARS TLEMCEN
         const voitures = [
             {
-                id: 1,
-                marque: "Seat",
-                modele: "Ibiza FR",
-                annee: "2018",
-                prix: "Negociable",
-                km: "206 000 km",
-                moteur: "1.6 MPI 110ch",
-                boite: "Manuelle",
-                couleur: "Blanc",
-                sbiha: "N9iya (00 Peinture), fiha chwiya a froid f lbab.",
-                sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
-                images: [
-                    "8araU9oyTbETqxWTOF20s2a1Mv9HfhXHjNHfKXI8.webp", 
-                    "C9VyoaquDyFL2S5heXNV4cNGOSN5Gk6JKnQdX2t8.webp"
-                ]
+                id: 1, marque: "Seat", modele: "Ibiza FR", annee: "2018", prix: "Negociable", km: "206 000 km", moteur: "1.6 MPI 110ch", boite: "Manuelle", couleur: "Blanc",
+                sbiha: "N9iya (00 Peinture), fiha chwiya a froid f lbab.", sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
+                images: ["8araU9oyTbETqxWTOF20s2a1Mv9HfhXHjNHfKXI8.webp", "C9VyoaquDyFL2S5heXNV4cNGOSN5Gk6JKnQdX2t8.webp"]
             },
             {
-                id: 2,
-                marque: "Renault",
-                modele: "Clio 4 GT Line",
-                annee: "2019",
-                prix: "Negociable",
-                km: "140 000 km",
-                moteur: "1.5 DCI 85ch",
-                boite: "Manuelle",
-                couleur: "Gris",
-                sbiha: "Sbiha f l'aile avant m3a l'capot.",
-                sbihaZones: { hood: true, frontDoor: false, backDoor: false, backWing: false, frontWing: true },
-                images: [
-                    "EGzCYAlIwCNWtCtoJWdj4j4pu9v6Aja9iIbUSRAl.webp",
-                    "fsbCCkMwxi3axXYaE7r4KEutpHPI1oTKVmFvu5vW.webp",
-                    "DKhbfqsTUhuKqINRx2eYROiO0N54CtsExE0C9EVD.webp",
-                    "1gkNzCkZE5WZcLadK3PdrrOVr7etrADV06b1oE4k.webp"
-                ]
+                id: 2, marque: "Renault", modele: "Clio 4 GT Line", annee: "2019", prix: "Negociable", km: "140 000 km", moteur: "1.5 DCI 85ch", boite: "Manuelle", couleur: "Gris",
+                sbiha: "Sbiha f l'aile avant m3a l'capot.", sbihaZones: { hood: true, frontDoor: false, backDoor: false, backWing: false, frontWing: true },
+                images: ["EGzCYAlIwCNWtCtoJWdj4j4pu9v6Aja9iIbUSRAl.webp", "fsbCCkMwxi3axXYaE7r4KEutpHPI1oTKVmFvu5vW.webp", "DKhbfqsTUhuKqINRx2eYROiO0N54CtsExE0C9EVD.webp", "1gkNzCkZE5WZcLadK3PdrrOVr7etrADV06b1oE4k.webp"]
             },
             {
-                id: 3,
-                marque: "Dacia",
-                modele: "Sandero Stepway",
-                annee: "2021",
-                prix: "Negociable",
-                km: "65 000 km",
-                moteur: "1.5 DCI 85ch",
-                boite: "Manuelle",
-                couleur: "Gris",
-                sbiha: "Voiture jdida 00 Peinture.",
-                sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
-                images: [
-                    "fKrY4xOhAmaYsZ4ew77M4ewRrZyuEZvYC6vffjCX.webp",
-                    "egrhwx1qQ9qd7lEzToBbNo7crwJqXJFs79uNgYL8.webp",
-                    "5sb5FiP3svTfOXcSiR41wiseJ9XAp0iBuOZjUcMa.webp",
-                    "65VIjdgfYfowOeUNMB9MsONSf4iG5kTY2iz7lTyO.webp"
-                ]
+                id: 3, marque: "Dacia", modele: "Sandero Stepway", annee: "2021", prix: "Negociable", km: "65 000 km", moteur: "1.5 DCI 85ch", boite: "Manuelle", couleur: "Gris",
+                sbiha: "Voiture jdida 00 Peinture.", sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
+                images: ["fKrY4xOhAmaYsZ4ew77M4ewRrZyuEZvYC6vffjCX.webp", "egrhwx1qQ9qd7lEzToBbNo7crwJqXJFs79uNgYL8.webp", "5sb5FiP3svTfOXcSiR41wiseJ9XAp0iBuOZjUcMa.webp", "65VIjdgfYfowOeUNMB9MsONSf4iG5kTY2iz7lTyO.webp"]
             },
             {
-                id: 4,
-                marque: "Geely",
-                modele: "Geely Coolray",
-                annee: "2025",
-                prix: "Negociable",
-                km: "12 000 km",
-                moteur: "1.5 TD 174ch",
-                boite: "Automatique DCT",
-                couleur: "Gris Magnétique",
-                sbiha: "Voiture Neuve, 00 Peinture, Safia.",
-                sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
-                images: [
-                    "tm5RqR5Kc9KI6TUOlI5tPreMbvSKUhKNYowYaICe.webp",
-                    "5L5sZ7JTuXEjmexqacvOpYWSWnlqj4vTEQs8YUqP.webp",
-                    "eZHyg7dhVernhMo9wmNHkDlPAkKtZr5ezYBnZdLf.webp",
-                    "rRi01z8Y6Yikj1VJVNGjtPZj69XwHztLon8tqtbQ.webp"
-                ]
+                id: 4, marque: "Geely", modele: "Coolray", annee: "2025", prix: "Negociable", km: "12 000 km", moteur: "1.5 TD 174ch", boite: "Auto DCT", couleur: "Gris Magnétique",
+                sbiha: "Voiture Neuve, 00 Peinture, Safia.", sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
+                images: ["tm5RqR5Kc9KI6TUOlI5tPreMbvSKUhKNYowYaICe.webp", "5L5sZ7JTuXEjmexqacvOpYWSWnlqj4vTEQs8YUqP.webp", "eZHyg7dhVernhMo9wmNHkDlPAkKtZr5ezYBnZdLf.webp", "rRi01z8Y6Yikj1VJVNGjtPZj69XwHztLon8tqtbQ.webp"]
             },
             {
-                id: 5,
-                marque: "Livan",
-                modele: "Livan X3 Pro",
-                annee: "2024",
-                prix: "Negociable",
-                km: "24 000 km",
-                moteur: "1.5L MPI 102ch",
-                boite: "CVT Automatique",
-                couleur: "Blanc Nacré",
-                sbiha: "A froid sghir f l'aile avant.",
-                sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: true },
-                images: [
-                    "r9jCOPPZwmchZtivevGXYRyaGZGet6Uv0TyuAQL8.webp",
-                    "EJSsww2oJh65IT0cCyvzdMBwkx5lfUf4WbN4l9ic.webp",
-                    "Cg2udspu3KesVFy1SWXQwDRDK79ZMPYpB3nD8JC7.webp",
-                    "YyWVKYw75XOMQuUr9nKgtB9O8sdlQ29mNJaFzgjD.webp",
-                    "h7DeWIKTij9zF0HgdwqxuJVd0je5eMYwyKXpCEWO.webp"
-                ]
+                id: 5, marque: "Livan", modele: "X3 Pro", annee: "2024", prix: "Negociable", km: "24 000 km", moteur: "1.5L MPI 102ch", boite: "CVT", couleur: "Blanc Nacré",
+                sbiha: "A froid sghir f l'aile avant.", sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: true },
+                images: ["r9jCOPPZwmchZtivevGXYRyaGZGet6Uv0TyuAQL8.webp", "EJSsww2oJh65IT0cCyvzdMBwkx5lfUf4WbN4l9ic.webp", "Cg2udspu3KesVFy1SWXQwDRDK79ZMPYpB3nD8JC7.webp", "YyWVKYw75XOMQuUr9nKgtB9O8sdlQ29mNJaFzgjD.webp", "h7DeWIKTij9zF0HgdwqxuJVd0je5eMYwyKXpCEWO.webp"]
             },
             {
-                id: 6,
-                marque: "Volkswagen",
-                modele: "T-Roc R-Line",
-                annee: "2026",
-                prix: "Negociable",
-                km: "9 000 km",
-                moteur: "2.0 TDI 150ch",
-                boite: "Automatique DSG7",
-                couleur: "Noir Intense",
-                sbiha: "Raccord sghir f lbab ta3 l'arrière.",
-                sbihaZones: { hood: false, frontDoor: false, backDoor: true, backWing: false, frontWing: false },
-                images: [
-                    "NyXHW9lM4dN3o1gMzNzbesBYMpIS1uv350Qu1WUN.webp",
-                    "CPQHET3e1dMbqsmuQ0AcLBUdNal03chAR6xhOdsU.webp",
-                    "bBizKGuTq40p4nTwT4AHaIzoqbdTyHEDClVZZpfs.webp",
-                    "ciorBqHXIAamKlBWsrmAiJY4KpQrfkYUKAoOVkK5.webp",
-                    "HmS23YIgRv8iKXuatu97AaSXZsQzttwb8LvAmQVW.webp"
-                ]
+                id: 6, marque: "Volkswagen", modele: "T-Roc R-Line", annee: "2026", prix: "Negociable", km: "9 000 km", moteur: "2.0 TDI 150ch", boite: "DSG7", couleur: "Noir Intense",
+                sbiha: "Raccord sghir f lbab ta3 l'arrière.", sbihaZones: { hood: false, frontDoor: false, backDoor: true, backWing: false, frontWing: false },
+                images: ["NyXHW9lM4dN3o1gMzNzbesBYMpIS1uv350Qu1WUN.webp", "CPQHET3e1dMbqsmuQ0AcLBUdNal03chAR6xhOdsU.webp", "bBizKGuTq40p4nTwT4AHaIzoqbdTyHEDClVZZpfs.webp", "ciorBqHXIAamKlBWsrmAiJY4KpQrfkYUKAoOVkK5.webp", "HmS23YIgRv8iKXuatu97AaSXZsQzttwb8LvAmQVW.webp"]
             },
             {
-                id: 7,
-                marque: "Fiat",
-                modele: "Tipo Sedan Life",
-                annee: "2024",
-                prix: "Negociable",
-                km: "5 000 km",
-                moteur: "1.6 E-Torq 110ch",
-                boite: "Automatique",
-                couleur: "Gris Métallisé",
-                sbiha: "00 Retouches, Safia.",
-                sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
-                images: [
-                    "MfuqhSVLppTuya4mc2pGUZsCwtREUuY2wugOCids.webp",
-                    "DdEyV0dfaHdFRdgWoTFTgAO0mAxtc6PW2ceGeqMg.webp",
-                    "1Ea4CbpIpYo0BKzS7U075DFwfrgtvlYPtKf0oQjr.webp",
-                    "uFElJGNmx5c909tBUF9jLC4pILh05F38Kr13V7XP.webp",
-                    "dpp623fjwSjq15nMkr2ZEHQtexpTshmDqhKohTIX.webp",
-                    "DIsRvTkf73aOHURRUzAVTQeBZ196xyxOumROWusP.webp",
-                    "KvnaS5KSko8Gba0jvjBLFkAFYPzbaYmkwI3FMDVe.webp"
-                ]
+                id: 7, marque: "Fiat", modele: "Tipo Life", annee: "2024", prix: "Negociable", km: "5 000 km", moteur: "1.6 E-Torq 110ch", boite: "Auto", couleur: "Gris",
+                sbiha: "00 Retouches, Safia.", sbihaZones: { hood: false, frontDoor: false, backDoor: false, backWing: false, frontWing: false },
+                images: ["MfuqhSVLppTuya4mc2pGUZsCwtREUuY2wugOCids.webp", "DdEyV0dfaHdFRdgWoTFTgAO0mAxtc6PW2ceGeqMg.webp", "1Ea4CbpIpYo0BKzS7U075DFwfrgtvlYPtKf0oQjr.webp", "uFElJGNmx5c909tBUF9jLC4pILh05F38Kr13V7XP.webp", "dpp623fjwSjq15nMkr2ZEHQtexpTshmDqhKohTIX.webp", "DIsRvTkf73aOHURRUzAVTQeBZ196xyxOumROWusP.webp", "KvnaS5KSko8Gba0jvjBLFkAFYPzbaYmkwI3FMDVe.webp"]
             }
         ];
 
         const translations = {
             fr: {
-                showroom: "Showroom Premium",
-                searchPlaceholder: "Rechercher une marque, sbiha, prix...",
-                tous: "Tous",
-                photos: "Photos",
-                detailsBtn: "Négocier le Prix sur WhatsApp",
-                specsTab: "FICHE TECHNIQUE",
-                paintTab: "SBIHA / PEINTURE",
-                financeTab: "MOURABAHA",
-                moteur: "Moteur",
-                boite: "Boîte",
-                couleur: "Couleur",
-                papiers: "Papiers",
-                sbihaTitle: "Localisation Peinture (Sbiha)",
+                showroom: "Tlemcen, Algérie",
+                searchPlaceholder: "Rechercher une marque, prix...",
+                tous: "Tous", photos: "Photos",
+                detailsBtn: "Négocier sur WhatsApp",
+                specsTab: "Fiche Auto", paintTab: "La Tôle", financeTab: "Islamique",
+                sbihaTitle: "Scanner Tôle",
                 sbihaTag: "Sbiha",
-                financeTitle: "Simulation Banque Islamique",
-                financeTag: "Sans Intérêt",
-                apportLabel: "Apport Initial (Avance)",
-                apportValue: "Montant Apport :",
-                mensuelLabel: "Mensualités (60 mois) :",
-                repriseTitle: "Proposer un Échange (Reprise)",
-                repriseDesc: "Saisissez les informations de votre véhicule. G CARS TLEMCEN étudiera votre offre et vous contactera rapidement.",
-                yourCar: "Votre voiture (Marque / Modèle)",
-                annee: "Année",
-                km: "Kilométrage",
-                peintureLabel: "État de la tôle (Peinture)",
-                targetLabel: "Véhicule souhaité chez G CARS",
-                sendProposal: "Envoyer ma proposition sur WhatsApp",
-                successToast: "Proposition prête sur WhatsApp !",
-                errorFields: "Remplissez les champs requis !",
-                homeNav: "Accueil",
-                exchangeNav: "Échange",
-                legendPainted: "Zone Peinte (Sbiha / Retouche)",
-                legendClean: "Zone saine (00 Retouches)",
-                swipeLabel: "Glisser l'image"
+                financeTitle: "Simulateur", financeTag: "0% Riba",
+                apportLabel: "Apport Initial", apportValue: "Montant Avance :", mensuelLabel: "Mensualités (60 mois) :",
+                repriseTitle: "Système d'Échange",
+                repriseDesc: "Proposez votre véhicule actuel. Notre équipe évaluera la différence de prix avec le véhicule souhaité.",
+                yourCar: "Votre véhicule", annee: "Année", km: "KM", peintureLabel: "État Peinture",
+                targetLabel: "Véhicule souhaité", sendProposal: "Envoyer l'offre",
+                successToast: "Envoyé avec succès !", errorFields: "Champs requis !",
+                homeNav: "Découvrir", exchangeNav: "Échange",
+                legendPainted: "Zone Peinte (Retouche)", legendClean: "Zone d'origine",
+                swipeLabel: "Glisser", touchDetails: "Toucher pour les détails"
             },
             ar: {
-                showroom: "معرض نخبوي",
-                searchPlaceholder: "ابحث عن سيارة، الصبيغة، السعر...",
-                tous: "الكل",
-                photos: "صور",
-                detailsBtn: "تفاوض على السعر في واتساب",
-                specsTab: "البطاقة التقنية",
-                paintTab: "الصبيغة والهيكل",
-                financeTab: "المرابحة الإسلامية",
-                moteur: "المحرك",
-                boite: "علبة السرعة",
-                couleur: "اللون",
-                papiers: "الوثائق",
-                sbihaTitle: "تحديد مكان الصبيغة",
-                sbihaTag: "صبيغة",
-                financeTitle: "محاكاة البنك الإسلامي",
-                financeTag: "بدون فوائد",
-                apportLabel: "الدفعة الأولى (مقدم)",
-                apportValue: "مبلغ الدفعة الأولى :",
-                mensuelLabel: "الأقساط الشهرية (60 شهر) :",
-                repriseTitle: "تقديم عرض تبادل (تبريز)",
-                repriseDesc: "أدخل معلومات سيارتك. وسيتصل بك فريق G CARS TLEMCEN في أقرب وقت ممكن لدراسة العرض.",
-                yourCar: "سيارتك (النوع والموديل)",
-                annee: "السنة",
-                km: "المسافة المقطوعة",
-                peintureLabel: "حالة الهيكل والصبيغة",
-                targetLabel: "السيارة المطلوبة عند G CARS",
-                sendProposal: "إرسال العرض عبر واتساب",
-                successToast: "تم تجهيز العرض على واتساب !",
-                errorFields: "يرجى ملء الحقول المطلوبة !",
-                homeNav: "الرئيسية",
-                exchangeNav: "تبديل",
-                legendPainted: "منطقة صبيغة / رتوش",
-                legendClean: "منطقة سليمة (00 صبيغة)",
-                swipeLabel: "اسحب الصورة"
+                showroom: "تلمسان، الجزائر",
+                searchPlaceholder: "ابحث عن سيارة، السعر...",
+                tous: "الكل", photos: "صور",
+                detailsBtn: "تفاوض في واتساب",
+                specsTab: "البطاقة التقنية", paintTab: "الهيكل", financeTab: "المرابحة",
+                sbihaTitle: "فحص الهيكل", sbihaTag: "صبيغة",
+                financeTitle: "محاكاة", financeTag: "بدون ربا",
+                apportLabel: "الدفعة الأولى", apportValue: "مبلغ الدفعة :", mensuelLabel: "الأقساط (60 شهر) :",
+                repriseTitle: "نظام التبادل",
+                repriseDesc: "اقترح سيارتك الحالية. سيقوم فريقنا بتقييم فرق السعر مع السيارة المطلوبة.",
+                yourCar: "سيارتك الحالية", annee: "السنة", km: "المسافة", peintureLabel: "حالة الهيكل",
+                targetLabel: "السيارة المطلوبة", sendProposal: "إرسال العرض",
+                successToast: "تم الإرسال بنجاح !", errorFields: "يرجى ملء الحقول !",
+                homeNav: "اكتشف", exchangeNav: "تبديل",
+                legendPainted: "منطقة صبيغة", legendClean: "منطقة أصلية",
+                swipeLabel: "اسحب", touchDetails: "اضغط للتفاصيل"
             }
         };
 
@@ -597,6 +479,7 @@
         let activeSelectedCategory = 'Tous';
         let activeViewIndex = null;
         let activeImagesCount = 0;
+        let autoScrollTimers = {}; // Pour stocker les timers du carrousel auto
 
         window.addEventListener('DOMContentLoaded', () => {
             renderBrandPills();
@@ -613,9 +496,11 @@
             if (currentLang === 'ar') {
                 htmlTag.setAttribute('dir', 'rtl');
                 document.body.style.fontFamily = "'Tajawal', sans-serif";
+                document.getElementById('brand-logo').classList.remove('tracking-tighter');
             } else {
                 htmlTag.setAttribute('dir', 'ltr');
                 document.body.style.fontFamily = "'Outfit', sans-serif";
+                document.getElementById('brand-logo').classList.add('tracking-tighter');
             }
 
             document.getElementById('label-showroom').innerText = translations[currentLang].showroom;
@@ -623,10 +508,6 @@
             document.getElementById('nav-home').innerText = translations[currentLang].homeNav;
             document.getElementById('nav-exchange').innerText = translations[currentLang].exchangeNav;
             document.getElementById('badge-swipe-indicator').innerHTML = `${translations[currentLang].swipeLabel} <i class="fa-solid fa-arrow-right-arrow-left ml-1"></i>`;
-            document.getElementById('label-km').innerText = translations[currentLang].km;
-            document.getElementById('label-boite').innerText = translations[currentLang].boite;
-            document.getElementById('label-moteur').innerText = translations[currentLang].moteur;
-            document.getElementById('label-couleur').innerText = translations[currentLang].couleur;
             document.getElementById('label-sbiha-title').innerText = translations[currentLang].sbihaTitle;
             document.getElementById('badge-sbiha').innerText = translations[currentLang].sbihaTag;
             document.getElementById('label-legend-painted').innerText = translations[currentLang].legendPainted;
@@ -649,6 +530,11 @@
             renderBrandPills();
             renderCars();
             buildRepriseTargetDropdown();
+            
+            // Re-apply tab translations
+            document.getElementById('tab-specs').innerText = translations[currentLang].specsTab;
+            document.getElementById('tab-paint').innerText = translations[currentLang].paintTab;
+            document.getElementById('tab-finance').innerText = translations[currentLang].financeTab;
         }
 
         function renderBrandPills() {
@@ -658,10 +544,10 @@
             uniqueBrands.forEach(brand => {
                 const isActive = brand === activeSelectedCategory;
                 const activeStyle = isActive 
-                    ? 'bg-laserred text-white shadow-md shadow-laserred/20 border border-laserred' 
+                    ? 'bg-laserred text-white shadow-[0_0_15px_rgba(244,63,94,0.4)] border border-laserred' 
                     : 'bg-surface border border-white/5 text-gray-400 hover:text-white';
                 const displayLabel = brand === 'Tous' ? translations[currentLang].tous : brand;
-                container.innerHTML += `<button onclick="selectCategory('${brand}')" class="px-5 py-2 text-xs font-bold rounded-full transition whitespace-nowrap ${activeStyle}">${displayLabel}</button>`;
+                container.innerHTML += `<button onclick="selectCategory('${brand}')" class="px-6 py-2.5 text-xs font-black rounded-full transition-all whitespace-nowrap ${activeStyle}">${displayLabel}</button>`;
             });
         }
 
@@ -673,6 +559,27 @@
 
         function filterCars() { renderCars(); }
 
+        // --- GESTION DU SCROLL AUTO ET MANUEL ---
+        function startAutoScroll(carId) {
+            const slider = document.getElementById(`slider-${carId}`);
+            if(!slider) return;
+            // Clear any existing interval
+            if(autoScrollTimers[carId]) clearInterval(autoScrollTimers[carId]);
+            
+            autoScrollTimers[carId] = setInterval(() => {
+                const width = slider.offsetWidth;
+                let nextScroll = slider.scrollLeft + width;
+                if (nextScroll >= slider.scrollWidth - 10) {
+                    nextScroll = 0; // Rewind
+                }
+                slider.scrollTo({ left: nextScroll, behavior: 'smooth' });
+            }, 3500); // Défilement chaque 3.5 sec
+        }
+
+        function stopAutoScroll(carId) {
+            if(autoScrollTimers[carId]) clearInterval(autoScrollTimers[carId]);
+        }
+
         function updateCardImageDot(el, carId) {
             const scrollLeft = el.scrollLeft;
             const itemWidth = el.offsetWidth;
@@ -680,34 +587,41 @@
             const dots = document.querySelectorAll(`.indicator-dot-${carId}`);
             dots.forEach((dot, index) => {
                 if(index === activeDotIndex) {
-                    dot.classList.add('bg-laserred', 'w-3');
-                    dot.classList.remove('bg-white/40', 'w-1.5');
+                    dot.classList.add('bg-laserred', 'w-4');
+                    dot.classList.remove('bg-white/30', 'w-1.5');
                 } else {
-                    dot.classList.add('bg-white/40', 'w-1.5');
-                    dot.classList.remove('bg-laserred', 'w-3');
+                    dot.classList.add('bg-white/30', 'w-1.5');
+                    dot.classList.remove('bg-laserred', 'w-4');
                 }
             });
         }
 
-        let touchStartPointerX = 0; let touchStartPointerY = 0;
-        function registerTouchStart(e) {
-            touchStartPointerX = e.touches ? e.touches[0].clientX : e.clientX;
-            touchStartPointerY = e.touches ? e.touches[0].clientY : e.clientY;
+        let touchStartX = 0; let touchStartY = 0;
+        function handleTouchStart(e, carId) {
+            stopAutoScroll(carId); // Si l'utilisateur touche, on arrête le défilement auto
+            touchStartX = e.touches ? e.touches[0].clientX : e.clientX;
+            touchStartY = e.touches ? e.touches[0].clientY : e.clientY;
         }
-        function registerTouchEnd(e, carId) {
+        function handleTouchEnd(e, carId) {
             const touchEndX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
             const touchEndY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
-            if (Math.abs(touchEndX - touchStartPointerX) < 6 && Math.abs(touchEndY - touchStartPointerY) < 6) {
+            // Si pas de mouvement (un vrai clic)
+            if (Math.abs(touchEndX - touchStartX) < 6 && Math.abs(touchEndY - touchStartY) < 6) {
                 openCarDetails(carId);
+            } else {
+                startAutoScroll(carId); // Reprendre l'auto-scroll après le swipe
             }
         }
 
         function renderCars() {
             const feed = document.getElementById('cars-feed-list');
             const searchKeyword = document.getElementById('app-search-input').value.toLowerCase().trim();
+            
+            // Clear existing timers
+            Object.keys(autoScrollTimers).forEach(id => clearInterval(autoScrollTimers[id]));
             feed.innerHTML = '';
+            
             let filteredList = voitures;
-
             if (activeSelectedCategory !== 'Tous') { filteredList = voitures.filter(car => car.marque === activeSelectedCategory); }
             if (searchKeyword) {
                 filteredList = filteredList.filter(car => `${car.marque} ${car.modele} ${car.annee} ${car.moteur} ${car.sbiha}`.toLowerCase().includes(searchKeyword));
@@ -715,37 +629,64 @@
 
             filteredList.forEach((car, index) => {
                 const sbihaBadgeClass = car.sbiha.toLowerCase().includes('00 peinture') || car.sbiha.toLowerCase().includes('neuve')
-                    ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-laserred/10 text-laserred border-laserred/20';
+                    ? 'bg-zinc-800/80 text-gray-300' : 'bg-laserred/20 text-laserred font-bold';
 
                 feed.innerHTML += `
-                <div class="card-animate bg-surface rounded-2xl border border-white/5 overflow-hidden">
-                    <div class="relative h-80 p-2 bg-black/20">
-                        <div class="swipe-slider h-full w-full rounded-xl" onscroll="updateCardImageDot(this, ${car.id})" onmousedown="registerTouchStart(event)" onmouseup="registerTouchEnd(event, ${car.id})")" ontouchstart="registerTouchStart(event)" ontouchend="registerTouchEnd(event, ${car.id})">
-                            ${car.images.map(img => `<div class="swipe-slide h-full w-full"><img src="${img}" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ffffff?text=G+CARS';"></div>`).join('')}
+                <div class="card-animate card-premium rounded-3xl overflow-hidden mb-6 relative">
+                    
+                    <!-- THE AUTO-SCROLLING GALLERY -->
+                    <div class="relative h-[340px] w-full group">
+                        <div id="slider-${car.id}" class="swipe-container h-full w-full" 
+                             onscroll="updateCardImageDot(this, ${car.id})" 
+                             onmousedown="handleTouchStart(event, ${car.id})" 
+                             onmouseup="handleTouchEnd(event, ${car.id})" 
+                             ontouchstart="handleTouchStart(event, ${car.id})" 
+                             ontouchend="handleTouchEnd(event, ${car.id})">
+                            ${car.images.map(img => `
+                                <div class="swipe-slide h-full w-full relative">
+                                    <img src="${img}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ffffff?text=G+CARS';">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40 pointer-events-none"></div>
+                                </div>
+                            `).join('')}
                         </div>
-                        <span class="absolute top-4 left-4 bg-laserred text-white text-[10px] font-bold px-3 py-1 rounded-md">${car.annee}</span>
-                        <div class="absolute bottom-4 right-4 bg-black/70 backdrop-blur border border-white/5 text-white text-[10px] px-3 py-1.5 rounded-full font-bold shadow-sm">
-                            <i class="fa-regular fa-image mr-1 text-laserred"></i> ${car.images.length} ${translations[currentLang].photos}
+
+                        <!-- Top Badges -->
+                        <span class="absolute top-4 left-4 bg-laserred text-white text-[11px] font-black px-3 py-1.5 rounded-lg shadow-lg">${car.annee}</span>
+                        <div class="absolute top-4 right-4 bg-black/60 backdrop-blur border border-white/10 text-white text-[10px] px-3 py-1.5 rounded-full font-bold">
+                            <i class="fa-regular fa-image mr-1 text-laserred"></i> ${car.images.length}
                         </div>
-                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1 bg-black/60 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-white/5 shadow-md">
-                            ${car.images.map((_, i) => `<span class="indicator-dot-${car.id} h-1.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-laserred w-3' : 'bg-white/40 w-1.5'}"></span>`).join('')}
-                        </div>
-                    </div>
-                    <div class="p-4 pt-2 cursor-pointer" onclick="openCarDetails(${car.id})">
-                        <div class="flex justify-between items-start mb-1">
-                            <div>
-                                <span class="text-[9px] text-gray-500 font-extrabold uppercase tracking-widest">${car.marque}</span>
-                                <h2 class="text-xl font-black text-white leading-none mt-0.5">${car.modele}</h2>
+
+                        <!-- Floating Details on Image -->
+                        <div class="absolute bottom-6 w-full px-5 pointer-events-none">
+                            <div class="flex justify-between items-end mb-2">
+                                <div>
+                                    <span class="text-[10px] text-gray-300 font-extrabold uppercase tracking-widest drop-shadow-md">${car.marque}</span>
+                                    <h2 class="text-2xl font-black text-white leading-none drop-shadow-lg">${car.modele}</h2>
+                                </div>
+                                <span class="text-lg font-black text-laserred drop-shadow-lg">${car.prix}</span>
                             </div>
-                            <span class="text-base font-black text-laserred bg-laserred/10 px-2.5 py-1.5 rounded-xl border border-laserred/20 whitespace-nowrap">${car.prix}</span>
+                            <!-- Mini Specs -->
+                            <div class="flex gap-2 text-[10px] font-bold">
+                                <span class="bg-black/50 backdrop-blur px-3 py-1.5 rounded-md text-white border border-white/10"><i class="fa-solid fa-gauge-high text-laserred mr-1"></i> ${car.km}</span>
+                                <span class="bg-black/50 backdrop-blur px-3 py-1.5 rounded-md text-white border border-white/10 truncate ${sbihaBadgeClass}"><i class="fa-solid fa-paint-roller mr-1"></i> ${car.sbiha.substring(0,20)}...</span>
+                            </div>
                         </div>
-                        <p class="text-gray-400 text-xs font-semibold mb-3 flex items-center gap-1.5"><i class="fa-solid fa-gauge-high text-laserred"></i> ${car.km}</p>
-                        <div class="flex gap-2 text-[11px] font-bold mt-2">
-                            <span class="flex-1 bg-black/30 border border-white/5 text-gray-300 py-2 rounded-lg flex justify-center items-center gap-1.5"><i class="fa-solid fa-gas-pump text-laserred"></i> ${car.moteur}</span>
-                            <span class="flex-1 border text-center py-2 rounded-lg flex justify-center items-center gap-1.5 truncate px-2 ${sbihaBadgeClass}"><i class="fa-solid fa-paint-roller"></i> Sbiha: ${car.sbiha}</span>
+
+                        <!-- Indicator Dots -->
+                        <div class="absolute bottom-2 w-full flex justify-center gap-1.5 pointer-events-none">
+                            ${car.images.map((_, i) => `<span class="indicator-dot-${car.id} h-1.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-laserred w-4' : 'bg-white/30 w-1.5'}"></span>`).join('')}
                         </div>
                     </div>
+
+                    <!-- Touch to open details bar -->
+                    <div class="bg-laserred text-white text-center py-3 text-[10px] font-black uppercase tracking-widest cursor-pointer animate-pulse-slow flex items-center justify-center gap-2" onclick="openCarDetails(${car.id})">
+                        ${translations[currentLang].touchDetails} <i class="fa-solid fa-chevron-up"></i>
+                    </div>
+
                 </div>`;
+                
+                // Start Auto-Scroll for this car
+                setTimeout(() => startAutoScroll(car.id), 500);
             });
         }
 
@@ -769,7 +710,7 @@
             document.getElementById('svg-back-wing').setAttribute('fill', sbihaZone.backWing ? '#f43f5e' : '#1a1a24');
             document.getElementById('svg-front-wing').setAttribute('fill', sbihaZone.frontWing ? '#f43f5e' : '#1a1a24');
 
-            // CHANGER LE NUMERO DE G CARS SUR LE CTA WHATSAPP DIRECT HNA
+            // METTRE LE NUMERO DE G CARS HNA
             const rawMessage = `Salam G CARS TLEMCEN, rani nsaqsi 3la la ${car.marque} ${car.modele} (${car.annee}) li rakom 7atinha f le catalogue.`;
             document.getElementById('action-whatsapp-link').href = `https://wa.me/213550000000?text=${encodeURIComponent(rawMessage)}`;
 
@@ -777,7 +718,7 @@
             const cleanImages = car.images.filter(img => img.trim() !== ''); activeImagesCount = cleanImages.length;
 
             cleanImages.forEach(imgLink => {
-                swiperContainer.innerHTML += `<div class="swipe-slide relative h-full w-full bg-surface flex items-center justify-center"><img src="${imgLink}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ffffff?text=G+CARS';"></div>`;
+                swiperContainer.innerHTML += `<div class="swipe-slide relative h-full w-full bg-black flex items-center justify-center"><img src="${imgLink}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x400/18181b/ffffff?text=G+CARS';"></div>`;
             });
 
             document.getElementById('gallery-counter').innerText = `1 / ${activeImagesCount}`;
@@ -789,7 +730,7 @@
 
         function closeCarDetails() {
             document.getElementById('modalContainer').classList.remove('active');
-            setTimeout(() => { document.getElementById('carDetailModal').classList.add('hidden'); document.body.style.overflow = ''; }, 300);
+            setTimeout(() => { document.getElementById('carDetailModal').classList.add('hidden'); document.body.style.overflow = ''; }, 400);
         }
 
         function updateGalleryTracker() {
@@ -799,13 +740,9 @@
         }
 
         function activateSheetTab(tabName) {
-            document.getElementById('tab-specs').innerText = translations[currentLang].specsTab;
-            document.getElementById('tab-paint').innerText = translations[currentLang].paintTab;
-            document.getElementById('tab-finance').innerText = translations[currentLang].financeTab;
-
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.className = "flex-1 py-3.5 border-b-2 border-transparent text-gray-400 transition");
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.className = "tab-btn flex-1 py-4 border-b-2 border-transparent text-gray-500 transition");
             const btnObj = document.getElementById(`tab-${tabName}`);
-            if(btnObj) { btnObj.className = "flex-1 py-3.5 border-b-2 border-laserred text-laserred transition"; }
+            if(btnObj) { btnObj.className = "tab-btn flex-1 py-4 border-b-2 border-laserred text-laserred transition shadow-[0_4px_15px_-5px_rgba(244,63,94,0.3)]"; }
 
             document.getElementById('tab-pane-specs').classList.add('hidden');
             document.getElementById('tab-pane-paint').classList.add('hidden');
@@ -831,7 +768,7 @@
 
         function buildRepriseTargetDropdown() {
             const dropdown = document.getElementById('rep-car-target'); dropdown.innerHTML = '';
-            voitures.forEach(car => { dropdown.innerHTML += `<option value="${car.marque} ${car.modele} (${car.prix})" class="text-slate-800">${car.marque} ${car.modele} - ${car.prix}</option>`; });
+            voitures.forEach(car => { dropdown.innerHTML += `<option value="${car.marque} ${car.modele} (${car.prix})" class="text-white bg-surface">${car.marque} ${car.modele} - ${car.prix}</option>`; });
         }
 
         function openRepriseModal() {
@@ -852,16 +789,15 @@
 
             if(!name || !year || !km) { showToastNotification(translations[currentLang].errorFields); return; }
 
-            const msg = `Salam G CARS TLEMCEN, rani n9tara7 reprise (échange) :\n\n🚗 Voiture : ${name} (${year})\n¼️ KM : ${km}\n🎨 Peinture : ${paint || 'Aucune'}\n\n🔄 Contre : ${target}`;
-            // METTRE LE NUMERO DE TELEPHONE DE G CARS HNA EN DIRECT
+            const msg = `Salam G CARS TLEMCEN, rani n9tara7 reprise (échange) :\n\n🚗 Voiture : ${name} (${year})\n🛣️ KM : ${km}\n🎨 Peinture : ${paint || 'Aucune'}\n\n🔄 Contre : ${target}`;
             window.open(`https://wa.me/213550000000?text=${encodeURIComponent(msg)}`, '_blank');
             closeRepriseModal(); showToastNotification(translations[currentLang].successToast);
         }
 
         function showToastNotification(text) {
             const alertBox = document.getElementById('toastAlert'); document.getElementById('toast-txt').innerText = text;
-            alertBox.classList.remove('-translate-y-20', 'opacity-0'); alertBox.classList.add('translate-y-0', 'opacity-100');
-            setTimeout(() => { alertBox.classList.remove('translate-y-0', 'opacity-100'); alertBox.classList.add('-translate-y-20', 'opacity-0'); }, 3000);
+            alertBox.classList.remove('-translate-y-24', 'opacity-0'); alertBox.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => { alertBox.classList.remove('translate-y-0', 'opacity-100'); alertBox.classList.add('-translate-y-24', 'opacity-0'); }, 3000);
         }
     </script>
 </body>
