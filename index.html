@@ -166,23 +166,28 @@
             animation: pulseRed 2s infinite;
         }
 
+        /* 🟢 FIX VERTICAL SCROLL ON MOBILE 🟢 */
         .page-layer {
             position: absolute;
             inset: 0;
             width: 100%;
-            min-height: 100vh;
+            height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             transition: opacity 0.5s ease, transform 0.5s ease;
             opacity: 0;
             pointer-events: none;
             z-index: 10;
+            display: none;
         }
         .page-layer.active {
             opacity: 1;
             pointer-events: auto;
             transform: scale(1);
             z-index: 20;
+            display: flex;
         }
-        .page-layer.hidden-scale { transform: scale(0.95); display: none; }
+        .page-layer.hidden-scale { transform: scale(0.95); }
 
         .tech-input {
             width: 100%;
@@ -202,25 +207,22 @@
 </head>
 <body class="antialiased selection:bg-neonred selection:text-white">
 
-    <div class="mobile-container pb-20 relative">
+    <div class="mobile-container relative">
         <div class="bg-noise"></div>
 
-        <!-- ================= PAGE 1: LUXURY ENTRANCE & ANIMATED LOGO ================= -->
-        <section id="page-1" class="page-layer active flex flex-col justify-center items-center bg-black relative overflow-hidden p-6">
-            <!-- Dynamic Red Ambient Lights -->
+        <!-- ================= PAGE 1: LUXURY ENTRANCE ================= -->
+        <section id="page-1" class="page-layer active flex-col justify-center items-center bg-black relative overflow-hidden p-6">
             <div class="absolute top-[10%] left-[-20%] w-96 h-96 bg-red-600/25 rounded-full blur-[120px] animate-pulse-red pointer-events-none"></div>
             <div class="absolute bottom-[10%] right-[-20%] w-96 h-96 bg-red-700/25 rounded-full blur-[120px] animate-pulse-red pointer-events-none" style="animation-delay: 1.5s;"></div>
             
             <div class="relative z-10 flex flex-col items-center animate-slide-up-fade text-center px-4 w-full my-auto">
                 <div class="text-center space-y-4 my-auto">
                     
-                    <!-- HIGH-END ANIMATED LOGO CONTAINER -->
                     <div class="relative inline-block mb-2 group">
                         <div class="absolute -inset-2 bg-gradient-to-r from-red-600/40 via-neonred/60 to-red-600/40 rounded-3xl blur-xl opacity-70 animate-pulse"></div>
                         <img src="logo.png" alt="DIGITAL AUTO CARS" class="h-20 md:h-28 object-contain mx-auto relative z-10 animate-elegant-float drop-shadow-[0_0_25px_rgba(255,0,0,0.8)] transition-transform duration-500 hover:scale-105" onerror="this.style.display='none'">
                     </div>
 
-                    <!-- BRAND TITLE -->
                     <h1 class="text-3xl md:text-5xl font-brand font-black text-white tracking-tighter uppercase leading-none drop-shadow-[0_0_25px_rgba(255,0,0,0.6)] animate-breathing-glow" dir="ltr">
                         DIGITAL <span class="text-neonred">AUTO CARS</span>
                     </h1>
@@ -248,7 +250,7 @@
         </section>
 
         <!-- ================= PAGE 2: CHOICES ================= -->
-        <section id="page-2" class="page-layer hidden-scale flex flex-col justify-center items-center bg-darkbg p-6">
+        <section id="page-2" class="page-layer hidden-scale flex-col justify-center items-center bg-darkbg p-6">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none mix-blend-overlay"></div>
             
             <div class="w-full relative z-10 flex flex-col items-center mb-8">
@@ -292,8 +294,8 @@
             </button>
         </section>
 
-        <!-- ================= PAGE 3: CATALOG ================= -->
-        <section id="page-3" class="page-layer hidden-scale flex flex-col bg-darkbg">
+        <!-- ================= PAGE 3: CATALOG (FULL VERTICAL SCROLL) ================= -->
+        <section id="page-3" class="page-layer hidden-scale flex-col bg-darkbg hide-scrollbar">
             <header class="glass-header sticky top-0 z-40 px-5 py-4 flex justify-between items-center">
                 <button onclick="navigateTo('page-2')" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all cursor-pointer">
                     <i class="fa-solid fa-arrow-right"></i>
@@ -317,16 +319,16 @@
                 <a href="#" class="w-10 h-10 rounded-xl bg-red-900/20 border border-red-500/30 flex items-center justify-center text-neonred hover:bg-neonred hover:text-white transition-all"><i class="fa-solid fa-location-dot"></i></a>
             </div>
 
-            <main class="flex-1 flex flex-col p-4">
+            <main class="flex-1 flex flex-col p-4 pb-32">
                 <div class="relative mb-5">
                     <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 text-xs"></i>
                     <input type="text" id="searchInput" oninput="renderCatalog()" placeholder="ابحث عن ماركة، موديل..." class="w-full bg-cardbg border border-white/10 rounded-2xl pl-10 pr-4 py-3.5 text-[11px] font-bold text-white focus:outline-none focus:border-neonred transition-colors shadow-inner">
                 </div>
 
-                <div id="carsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-28"></div>
+                <div id="carsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
             </main>
 
-            <nav class="glass-header fixed bottom-0 w-full max-w-[520px] lg:max-w-[900px] flex justify-around items-center pt-3 pb-6 z-30" id="mainBottomNav">
+            <nav class="glass-header fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[520px] lg:max-w-[900px] flex justify-around items-center pt-3 pb-6 z-30" id="mainBottomNav">
                 <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="flex flex-col items-center text-white transition-all hover:scale-105 group cursor-pointer">
                     <i class="fa-solid fa-table-cells-large text-lg mb-1 group-hover:text-neonred transition-colors"></i>
                     <span class="text-[9px] font-black tracking-widest">الكتالوج</span>
@@ -342,35 +344,53 @@
             </nav>
         </section>
 
-        <!-- ================= MODAL DETAILS (NO HORIZONTAL GALLERY SCROLL) ================= -->
+        <!-- ================= MODAL DETAILS WITH FULL HORIZONTAL SWIPE ================= -->
         <div id="carDetailModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
             <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeDetailModal()"></div>
             <div class="relative w-full max-w-[520px] lg:max-w-[800px] mx-auto h-[92vh] bg-panelbg border-t border-white/10 rounded-t-[32px] flex flex-col transition-transform duration-500 translate-y-full" id="carDetailSheet">
                 
-                <!-- ADJUSTED CLOSE BUTTON: PERFECT SIZE & SPACING -->
-                <div class="absolute top-6 left-5 z-[60]">
-                    <button onclick="closeDetailModal()" class="w-8 h-8 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center hover:bg-neonred hover:border-neonred transition-all cursor-pointer shadow-xl active:scale-95">
+                <!-- PERFECT CLOSE BUTTON POSITION -->
+                <div class="absolute top-4 left-4 z-[70]">
+                    <button onclick="closeDetailModal()" class="w-8 h-8 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center hover:bg-neonred hover:border-neonred transition-all cursor-pointer shadow-2xl active:scale-90">
                         <i class="fa-solid fa-xmark text-xs"></i>
                     </button>
                 </div>
 
                 <div class="flex-1 overflow-y-auto pb-6 hide-scrollbar relative">
-                    <!-- SINGLE CAR IMAGE (NO GALLERY SCROLLING IN MODAL) -->
-                    <div class="w-full aspect-square bg-black relative" dir="ltr">
-                        <img id="det-img" src="" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-panelbg via-panelbg/20 to-transparent"></div>
-                        <div id="det-sold-badge" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sold-badge-fx px-6 py-2 rounded-xl text-lg font-black tracking-widest border border-white/20 transform -rotate-12 hidden">مباعة ❌</div>
+                    
+                    <!-- HORIZONTAL SWIPER FOR ALL CAR IMAGES -->
+                    <div class="w-full aspect-square md:aspect-video bg-black relative touch-pan-x" dir="ltr">
+                        <!-- Navigation Arrows -->
+                        <button onclick="scrollModalGallery(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer shadow-lg">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                        </button>
+                        <button onclick="scrollModalGallery(1)" class="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer shadow-lg">
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+
+                        <div id="modal-image-swiper" class="w-full h-full overflow-x-scroll flex snap-x snap-mandatory scroll-smooth hide-scrollbar touch-pan-x" onscroll="syncSwiperImageCounter()">
+                            <!-- Images loaded dynamically -->
+                        </div>
+
+                        <div class="absolute bottom-0 w-full h-20 bg-gradient-to-t from-panelbg via-panelbg/40 to-transparent pointer-events-none z-10"></div>
                         
-                        <div class="absolute bottom-5 left-5 right-5 flex justify-between items-end">
-                            <div>
-                                <span id="det-cat" class="bg-white/10 backdrop-blur text-white border border-white/20 text-[9px] px-2.5 py-1 rounded-md font-bold uppercase tracking-wider mb-2 inline-block">Category</span>
-                                <h2 id="det-title" class="text-3xl font-brand font-black text-white leading-none drop-shadow-xl tracking-tight">Car Name</h2>
-                            </div>
-                            <span id="det-year" class="bg-white text-black px-3 py-1.5 rounded-xl font-black text-sm">2024</span>
+                        <div id="det-sold-badge" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sold-badge-fx px-6 py-2 rounded-xl text-lg font-black tracking-widest border border-white/20 transform -rotate-12 z-20 hidden">مباعة ❌</div>
+                        
+                        <div class="absolute bottom-4 left-4 z-20 bg-black/80 backdrop-blur border border-white/10 text-white text-[10px] px-3 py-1 rounded-full font-bold">
+                            <i class="fa-solid fa-images text-neonred mr-1"></i> <span id="gallery-indicator-counter">1 / 1</span>
+                        </div>
+
+                        <div class="absolute bottom-4 right-4 z-20">
+                            <span id="det-year" class="bg-white text-black px-3 py-1.5 rounded-xl font-black text-xs">2024</span>
                         </div>
                     </div>
 
-                    <div class="p-5 space-y-6 relative z-10 -mt-2">
+                    <div class="p-5 space-y-6 relative z-10">
+                        <div>
+                            <span id="det-cat" class="bg-white/10 backdrop-blur text-white border border-white/20 text-[9px] px-2.5 py-1 rounded-md font-bold uppercase tracking-wider mb-2 inline-block">Category</span>
+                            <h2 id="det-title" class="text-2xl md:text-3xl font-brand font-black text-white leading-none tracking-tight">Car Name</h2>
+                        </div>
+
                         <div class="glass-panel border-white/10 p-4 rounded-2xl flex justify-between items-center shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
                             <span class="text-[10px] font-bold text-zinc-400">السعر المطلوب</span>
                             <span id="det-price" class="text-2xl font-brand font-black text-neonred drop-shadow-md" dir="ltr">000 M</span>
@@ -725,12 +745,11 @@
             await saveVehicleToDb(car);
         }
 
-        // ================= CATALOG RENDERER WITH AUTO-SLIDE & TOUCH =================
+        // ================= CATALOG RENDERER WITH AUTO-SLIDE =================
         function renderCatalog() {
             const grid = document.getElementById('carsGrid');
             if(!grid) return;
 
-            // Clear active timers
             Object.keys(autoCarousels).forEach(key => clearInterval(autoCarousels[key]));
             autoCarousels = {};
             
@@ -800,7 +819,6 @@
                     </div>
                 </div>`;
 
-                // Launch Auto Carousel if more than 1 image
                 if (carImages.length > 1) {
                     setTimeout(() => startAutoCarousel(car.id), 500);
                 }
@@ -833,15 +851,40 @@
             });
         }
 
-        // ================= DETAILS & LEAD FORM (NO SCROLL IN MODAL) =================
+        // ================= GALLERY SCROLLER FOR DETAILS MODAL =================
+        function scrollModalGallery(direction) {
+            const gallery = document.getElementById('modal-image-swiper');
+            if(!gallery) return;
+            const slideWidth = gallery.clientWidth;
+            gallery.scrollBy({ left: direction * slideWidth, behavior: 'smooth' });
+        }
+
+        function syncSwiperImageCounter() {
+            const gallery = document.getElementById('modal-image-swiper');
+            if(!gallery || !gallery.clientWidth) return;
+            const currentIndex = Math.round(gallery.scrollLeft / gallery.clientWidth) + 1;
+            const total = gallery.children.length;
+            const counter = document.getElementById('gallery-indicator-counter');
+            if(counter) counter.innerText = `${Math.max(1, currentIndex)} / ${total || 1}`;
+        }
+
+        // ================= DETAILS & LEAD FORM (WITH HORIZONTAL SCROLL) =================
         function openCarDetails(id) {
             const car = state.vehicles.find(v => v && String(v.id) === String(id));
             if(!car) return;
 
             const carImages = (Array.isArray(car.images) && car.images.length > 0) ? car.images : ["https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=600&q=80"];
 
-            // Set single main image for the car details
-            document.getElementById('det-img').src = carImages[0];
+            // Inject All Images into Details Swiper Track
+            const swiper = document.getElementById('modal-image-swiper');
+            swiper.innerHTML = carImages.map(img => `
+                <div class="w-full h-full snap-center-item shrink-0 flex items-center justify-center bg-black relative min-w-full">
+                    <img src="${img}" class="w-full h-full object-cover">
+                </div>
+            `).join('');
+            swiper.scrollLeft = 0;
+            syncSwiperImageCounter();
+
             document.getElementById('det-title').innerText = `${car.marque || ''} ${car.modele || ''}`;
             document.getElementById('det-price').innerText = car.prix || '';
             document.getElementById('det-year').innerText = car.annee || '';
@@ -993,6 +1036,7 @@
             document.getElementById('f-image-label').innerText = `تم جاهزية ${state.tempImages.length} صور بنجاح`;
         }
 
+        // ULTRA LIGHTWEIGHT COMPRESSION FOR SUPABASE SAFETY (< 50KB PER IMAGE)
         function compressToSquare(file) {
             return new Promise(resolve => {
                 const reader = new FileReader();
