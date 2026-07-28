@@ -30,7 +30,6 @@
                     },
                     animation: {
                         'pulse-red': 'pulseRed 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'fade-scale-in': 'fadeScaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                         'slide-up-fade': 'slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                         'shimmer': 'shimmer 2.5s infinite linear',
                         'breathing-glow': 'breathingGlow 4s ease-in-out infinite alternate',
@@ -39,15 +38,11 @@
                     },
                     keyframes: {
                         pulseRed: {
-                            '0%, 100%': { opacity: '0.3', filter: 'blur(40px)', transform: 'scale(1)' },
-                            '50%': { opacity: '0.6', filter: 'blur(60px)', transform: 'scale(1.2)' }
-                        },
-                        fadeScaleIn: {
-                            '0%': { opacity: '0', transform: 'scale(0.95)' },
-                            '100%': { opacity: '1', transform: 'scale(1)' }
+                            '0%, 100%': { opacity: '0.3', filter: 'blur(40px)' },
+                            '50%': { opacity: '0.6', filter: 'blur(60px)' }
                         },
                         slideUpFade: {
-                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' }
                         },
                         shimmer: {
@@ -83,6 +78,7 @@
             -webkit-font-smoothing: antialiased;
             overflow: hidden;
             height: 100vh;
+            width: 100vw;
         }
         .font-brand { font-family: 'Montserrat', sans-serif; }
 
@@ -136,10 +132,10 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .glass-header {
-            background: rgba(5, 5, 5, 0.92);
+            background: rgba(5, 5, 5, 0.95);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .choice-card {
@@ -151,7 +147,7 @@
         }
         .choice-card:hover, .choice-card:active {
             border-color: rgba(255, 0, 0, 0.6);
-            transform: translateY(-5px) scale(1.02);
+            transform: translateY(-5px);
             box-shadow: 0 20px 40px -10px rgba(255, 0, 0, 0.3);
         }
 
@@ -167,27 +163,24 @@
             animation: pulseRed 2s infinite;
         }
 
-        /* 🟢 PAGE LAYER CONTAINER STABILITY 🟢 */
+        /* 🟢 PERFECT PAGE CONTAINER (NO TRANSFORM CONTAINING BLOCK TRAPS) 🟢 */
         .page-layer {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            transition: opacity 0.4s ease, transform 0.4s ease;
             opacity: 0;
             pointer-events: none;
             z-index: 10;
             display: none;
+            transition: opacity 0.4s ease;
         }
         .page-layer.active {
             opacity: 1;
             pointer-events: auto;
-            transform: scale(1);
             z-index: 20;
             display: flex;
         }
-        .page-layer.hidden-scale { transform: scale(0.95); }
 
         .tech-input {
             width: 100%;
@@ -217,7 +210,6 @@
             
             <div class="relative z-10 flex flex-col items-center animate-slide-up-fade text-center px-4 w-full my-auto">
                 <div class="text-center space-y-4 my-auto">
-                    
                     <div class="relative inline-block mb-2 group">
                         <div class="absolute -inset-2 bg-gradient-to-r from-red-600/40 via-neonred/60 to-red-600/40 rounded-3xl blur-xl opacity-70 animate-pulse"></div>
                         <img src="logo.png" alt="DIGITAL AUTO CARS" class="h-20 md:h-28 object-contain mx-auto relative z-10 animate-elegant-float drop-shadow-[0_0_25px_rgba(255,0,0,0.8)] transition-transform duration-500 hover:scale-105" onerror="this.style.display='none'">
@@ -250,7 +242,7 @@
         </section>
 
         <!-- ================= PAGE 2: CHOICES ================= -->
-        <section id="page-2" class="page-layer hidden-scale flex-col justify-center items-center bg-darkbg p-6 overflow-y-auto hide-scrollbar">
+        <section id="page-2" class="page-layer flex-col justify-center items-center bg-darkbg p-6 overflow-y-auto hide-scrollbar">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none mix-blend-overlay"></div>
             
             <div class="w-full relative z-10 flex flex-col items-center mb-8">
@@ -294,11 +286,11 @@
             </button>
         </section>
 
-        <!-- ================= PAGE 3: CATALOG (FIXED BOTTOM NAVBAR) ================= -->
-        <section id="page-3" class="page-layer hidden-scale flex-col bg-darkbg h-full overflow-hidden">
+        <!-- ================= PAGE 3: CATALOG (FIXED BOTTOM NAVBAR STRICTLY PINNED) ================= -->
+        <section id="page-3" class="page-layer flex-col bg-darkbg h-full overflow-hidden relative">
             
             <!-- FIXED HEADER -->
-            <header class="glass-header shrink-0 z-40 px-5 py-4 flex justify-between items-center">
+            <header class="glass-header shrink-0 z-30 px-5 py-4 flex justify-between items-center">
                 <button onclick="navigateTo('page-2')" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all cursor-pointer">
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
@@ -314,8 +306,8 @@
                 </button>
             </header>
 
-            <!-- SCROLLABLE CONTENT AREA (ONLY CARS SCROLL) -->
-            <div id="catalog-scroll-area" class="flex-1 overflow-y-auto hide-scrollbar p-4 pb-28">
+            <!-- SCROLLABLE CARS AREA ONLY -->
+            <div id="catalog-scroll-area" class="flex-1 overflow-y-auto hide-scrollbar p-4 pb-36">
                 <!-- Social Links -->
                 <div class="flex justify-center gap-3 mb-4" dir="ltr">
                     <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
@@ -334,8 +326,8 @@
                 <div id="carsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto w-full"></div>
             </div>
 
-            <!-- 🟢 FIXED BOTTOM NAVBAR (NEVER SCROLLS) 🟢 -->
-            <nav class="glass-header shrink-0 absolute bottom-0 left-0 right-0 w-full flex justify-around items-center pt-3 pb-6 z-40" id="mainBottomNav">
+            <!-- 🟢 FIXED BOTTOM NAVBAR (FIXED TO SCREEN BOTTOM ALWAYS) 🟢 -->
+            <nav class="glass-header fixed bottom-0 left-0 right-0 w-full max-w-[520px] lg:max-w-[900px] mx-auto flex justify-around items-center pt-3 pb-6 z-40 border-t border-white/10" id="mainBottomNav">
                 <button onclick="document.getElementById('catalog-scroll-area').scrollTo({top:0, behavior:'smooth'})" class="flex flex-col items-center text-white transition-all hover:scale-105 group cursor-pointer">
                     <i class="fa-solid fa-table-cells-large text-lg mb-1 group-hover:text-neonred transition-colors"></i>
                     <span class="text-[9px] font-black tracking-widest">الكتالوج</span>
@@ -365,11 +357,12 @@
 
                 <div class="flex-1 overflow-y-auto pb-6 hide-scrollbar relative">
                     
+                    <!-- HORIZONTAL SWIPER GALLERY -->
                     <div class="w-full aspect-square md:aspect-video bg-black relative touch-pan-x" dir="ltr">
                         <button onclick="scrollModalGallery(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer shadow-lg">
                             <i class="fa-solid fa-chevron-left text-xs"></i>
                         </button>
-                        <button onclick="scrollModalGallery(1)" class="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer shadow-lg">
+                        <button onclick="scrollModalGallery(1)" class="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer shadow-lg">
                             <i class="fa-solid fa-chevron-right text-xs"></i>
                         </button>
 
@@ -652,15 +645,13 @@
         function navigateTo(pageId) {
             document.querySelectorAll('.page-layer').forEach(p => {
                 p.classList.remove('active');
-                p.classList.add('hidden-scale');
-                setTimeout(() => { if(!p.classList.contains('active')) p.style.display = 'none'; }, 500);
+                p.style.display = 'none';
             });
             
             const target = document.getElementById(pageId);
             if(target) {
                 target.style.display = 'flex';
                 setTimeout(() => {
-                    target.classList.remove('hidden-scale');
                     target.classList.add('active');
                 }, 10);
             }
@@ -1040,6 +1031,7 @@
             document.getElementById('f-image-label').innerText = `تم جاهزية ${state.tempImages.length} صور بنجاح`;
         }
 
+        // ULTRA LIGHTWEIGHT COMPRESSION FOR SUPABASE SAFETY (< 50KB PER IMAGE)
         function compressToSquare(file) {
             return new Promise(resolve => {
                 const reader = new FileReader();
