@@ -5,13 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DIGITAL AUTO CARS | Qualité, Confiance, Performance</title>
     
-    <!-- ======================================================= -->
-    <!-- 🛑 MARKETING PIXELS (TIKTOK / META) 🛑                 -->
-    <!-- ======================================================= -->
-    <script>
-        // Meta Pixel & TikTok Pixel Placeholders
-    </script>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -31,7 +24,6 @@
                         'pulse-red': 'pulseRed 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'fade-scale-in': 'fadeScaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                         'slide-up-fade': 'slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'shimmer': 'shimmer 2.5s infinite linear',
                         'breathing-glow': 'breathingGlow 4s ease-in-out infinite alternate',
                         'success-pop': 'successPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards'
                     },
@@ -47,10 +39,6 @@
                         slideUpFade: {
                             '0%': { opacity: '0', transform: 'translateY(40px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' }
-                        },
-                        shimmer: {
-                            '0%': { transform: 'translateX(-100%)' },
-                            '100%': { transform: 'translateX(200%)' }
                         },
                         breathingGlow: {
                             '0%': { textShadow: '0 0 10px rgba(255,0,0,0.3)' },
@@ -626,9 +614,12 @@
     </div>
 
     <script>
-        // ================= SUPABASE ENGINE =================
-        const SUPABASE_URL = 'https://smumscrjovrsudhsaczy.supabase.co'; 
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdW1zY3Jqb3Zyc3VkaHNhY3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NjI2MzcsImV4cCI6MjEwMDMzODYzN30.TnYYE18XOI2RU21NRZVBSQDtd1h-PsTSsop8P3-Q-5o';
+        // =========================================================
+        // 🛑 SUPABASE IS TEMPORARILY DISCONNECTED 🛑
+        // الكود الآن يعمل بنسبة 100% محلياً (Local Storage) للتجريب
+        // =========================================================
+        const SUPABASE_URL = ''; 
+        const SUPABASE_ANON_KEY = '';
         
         let supabaseClient = null;
         if (SUPABASE_URL && SUPABASE_ANON_KEY) {
@@ -675,7 +666,7 @@
             const target = document.getElementById(pageId);
             if(target) {
                 target.style.display = 'flex';
-                void target.offsetWidth; // Trigger DOM reflow
+                void target.offsetWidth; 
                 target.classList.add('active');
             }
             
@@ -693,7 +684,7 @@
             navigateTo('page-3');
         }
 
-        // ================= DATABASE (SUPABASE) =================
+        // ================= DATABASE (LOCAL STORAGE ONLY NOW) =================
         async function fetchVehicles() {
             try {
                 if (supabaseClient) {
@@ -704,7 +695,6 @@
                     getLocalStorageVehicles();
                 }
             } catch (err) {
-                console.warn("Using local fallback:", err);
                 getLocalStorageVehicles();
             }
             
@@ -731,6 +721,7 @@
                         return false;
                     }
                 } else {
+                    // Local Storage Save Logic
                     const index = state.vehicles.findIndex(v => String(v.id) === String(car.id));
                     if (index > -1) state.vehicles[index] = car;
                     else state.vehicles.unshift(car);
@@ -840,7 +831,7 @@
             });
         }
 
-        // ================= GALLERY SCROLLER (MODAL SWIPE) =================
+        // ================= GALLERY SCROLLER =================
         function scrollModalGallery(direction) {
             const gallery = document.getElementById('modal-image-swiper');
             if(!gallery) return;
@@ -1024,7 +1015,6 @@
             document.getElementById('f-image-label').innerText = `تم جاهزية ${state.tempImages.length} صور بنجاح`;
         }
 
-        // ULTRA LIGHTWEIGHT COMPRESSION (< 50KB PER IMAGE FOR SUPABASE REST LIMITS)
         function compressToSquare(file) {
             return new Promise(resolve => {
                 const reader = new FileReader();
