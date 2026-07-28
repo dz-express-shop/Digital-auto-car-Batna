@@ -34,6 +34,8 @@
                         'slide-up-fade': 'slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                         'shimmer': 'shimmer 2.5s infinite linear',
                         'breathing-glow': 'breathingGlow 4s ease-in-out infinite alternate',
+                        'elegant-float': 'elegantFloat 4s ease-in-out infinite',
+                        'light-sweep': 'lightSweep 3s infinite',
                         'success-pop': 'successPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards'
                     },
                     keyframes: {
@@ -56,6 +58,14 @@
                         breathingGlow: {
                             '0%': { textShadow: '0 0 10px rgba(255,0,0,0.3)' },
                             '100%': { textShadow: '0 0 30px rgba(255,0,0,0.8), 0 0 50px rgba(255,0,0,0.5)' }
+                        },
+                        elegantFloat: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' }
+                        },
+                        lightSweep: {
+                            '0%': { left: '-100%' },
+                            '100%': { left: '200%' }
                         },
                         successPop: {
                             '0%': { opacity: '0', transform: 'scale(0.8)' },
@@ -94,6 +104,7 @@
             overflow: hidden;
         }
 
+        /* Desktop PC Container Optimization */
         @media (min-width: 1024px) {
             .app-viewport {
                 max-width: 900px;
@@ -143,6 +154,15 @@
             position: relative;
             overflow: hidden;
         }
+        .choice-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: skewX(-20deg);
+            transition: 0.7s;
+        }
+        .choice-card:hover::after { left: 150%; }
         .choice-card:hover, .choice-card:active {
             border-color: rgba(255, 0, 0, 0.6);
             transform: translateY(-5px) scale(1.02);
@@ -200,22 +220,23 @@
     <div class="app-viewport relative">
         <div class="bg-noise"></div>
 
-        <!-- ================= PAGE 1 ================= -->
+        <!-- ============================================================ -->
+        <!-- PAGE 1: SPLASH SCREEN & BRANDING                             -->
+        <!-- ============================================================ -->
         <section id="page-1" class="page-layer active flex flex-col justify-center items-center bg-black relative overflow-hidden p-6">
             <div class="absolute top-[10%] left-[-20%] w-96 h-96 bg-red-600/20 rounded-full blur-[120px] animate-pulse-red pointer-events-none"></div>
             <div class="absolute bottom-[10%] right-[-20%] w-96 h-96 bg-red-700/20 rounded-full blur-[120px] animate-pulse-red pointer-events-none" style="animation-delay: 1.5s;"></div>
             
             <div class="relative z-10 flex flex-col items-center animate-slide-up-fade text-center px-4 w-full my-auto">
                 <div class="text-center space-y-4">
-                    <!-- لوحة الشعار (إذا عندك logo.png تحطها هنا) -->
-                    <img src="logo.png" alt="DIGITAL AUTO CARS" class="h-16 md:h-20 object-contain mx-auto mb-2 drop-shadow-[0_0_20px_rgba(255,0,0,0.4)]" onerror="this.style.display='none'">
-
                     <h1 class="text-3xl md:text-5xl font-brand font-black text-white tracking-tighter uppercase leading-none drop-shadow-[0_0_25px_rgba(255,0,0,0.6)] animate-breathing-glow" dir="ltr">
                         DIGITAL <span class="text-neonred">AUTO CARS</span>
                     </h1>
 
                     <div class="py-3 space-y-2">
-                        <h2 class="text-xl md:text-2xl font-black text-white leading-snug tracking-tight">أهلاً بكم في عالم الفخامة</h2>
+                        <h2 class="text-xl md:text-2xl font-black text-white leading-snug tracking-tight">
+                            أهلاً بكم في عالم الفخامة
+                        </h2>
                         <p class="text-xs md:text-sm text-zinc-300 font-medium leading-relaxed max-w-md mx-auto">
                             وجهتكم الأولى لاقتناء أرقى السيارات المتوفرة في المعرض أو الاستيراد المباشر بأعلى معايير الجودة والاعتمادية.
                         </p>
@@ -230,12 +251,17 @@
 
                 <button onclick="navigateTo('page-2')" class="mt-12 relative group bg-transparent border border-white/20 text-white px-10 py-4 rounded-full font-black text-xs tracking-widest uppercase overflow-hidden hover:border-white/60 transition-all shadow-[0_0_30px_rgba(220,38,38,0.2)] active:scale-95 cursor-pointer">
                     <div class="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-all"></div>
-                    <span class="relative z-10 flex items-center gap-3">دخول المعرض <i class="fa-solid fa-arrow-right"></i></span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></div>
+                    <span class="relative z-10 flex items-center gap-3">
+                        دخول المعرض <i class="fa-solid fa-arrow-right"></i>
+                    </span>
                 </button>
             </div>
         </section>
 
-        <!-- ================= PAGE 2 ================= -->
+        <!-- ============================================================ -->
+        <!-- PAGE 2: THE CHOICES (SUR COMMANDE vs SHOWROOM)               -->
+        <!-- ============================================================ -->
         <section id="page-2" class="page-layer hidden-scale flex flex-col justify-center items-center bg-darkbg p-6">
             <div class="w-full relative z-10 flex flex-col items-center mb-8">
                 <h2 class="text-2xl md:text-3xl font-brand font-black text-white tracking-tight uppercase" dir="ltr">DIGITAL AUTO CARS</h2>
@@ -278,7 +304,9 @@
             </button>
         </section>
 
-        <!-- ================= PAGE 3: CATALOG ================= -->
+        <!-- ============================================================ -->
+        <!-- PAGE 3: MAIN APP CATALOG                                     -->
+        <!-- ============================================================ -->
         <section id="page-3" class="page-layer hidden-scale flex flex-col bg-darkbg">
             <header class="glass-header sticky top-0 z-40 px-5 py-4 flex justify-between items-center">
                 <button onclick="navigateTo('page-2')" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all cursor-pointer">
@@ -286,8 +314,7 @@
                 </button>
                 
                 <div class="flex flex-col items-center cursor-pointer group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                    <img src="logo.png" alt="DIGITAL AUTO" class="h-7 object-contain" onerror="this.style.display='none'; document.getElementById('txt-head-title').style.display='block';">
-                    <h1 id="txt-head-title" class="text-sm font-brand font-black text-white tracking-widest uppercase hidden">DIGITAL AUTO</h1>
+                    <h1 class="text-sm font-brand font-black text-white tracking-widest uppercase">DIGITAL AUTO</h1>
                     <h2 id="header-subtitle" class="text-[8px] font-bold text-neonred tracking-widest mt-0.5 uppercase">الكتالوج</h2>
                 </div>
                 
@@ -297,9 +324,9 @@
             </header>
 
             <div class="px-4 pt-4 flex justify-center gap-3" dir="ltr">
-                <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/20 transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/20 transition-all"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/20 transition-all"><i class="fa-brands fa-tiktok"></i></a>
                 <a href="#" class="w-10 h-10 rounded-xl bg-red-900/20 border border-red-500/30 flex items-center justify-center text-neonred hover:bg-neonred hover:text-white transition-all"><i class="fa-solid fa-location-dot"></i></a>
             </div>
 
@@ -310,7 +337,7 @@
                 </div>
 
                 <div id="carsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-28 max-w-2xl mx-auto w-full">
-                    <!-- Cards via JS -->
+                    <!-- Cars injected via JS -->
                 </div>
             </main>
 
@@ -330,47 +357,45 @@
             </nav>
         </section>
 
-        <!-- ================= MODAL FICHE TECHNIQUE WITH FULL RIGHT/LEFT SCROLL ================= -->
+        <!-- ============================================================ -->
+        <!-- 4. VEHICLE DETAILS & VIP LEAD FORM MODAL WITH GALLERY SCROLL -->
+        <!-- ============================================================ -->
         <div id="carDetailModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
             <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeDetailModal()"></div>
             <div class="relative w-full max-w-[520px] lg:max-w-[800px] mx-auto h-[92vh] bg-panelbg border-t border-white/10 rounded-t-[32px] flex flex-col transition-transform duration-500 translate-y-full" id="carDetailSheet">
                 
                 <div class="absolute top-4 left-4 right-4 flex justify-between z-50">
-                    <button onclick="closeDetailModal()" class="w-10 h-10 rounded-full bg-black/80 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                    <button onclick="closeDetailModal()" class="w-10 h-10 rounded-full bg-black/70 backdrop-blur border border-white/10 text-white flex items-center justify-center hover:bg-white/20 transition cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
                 </div>
 
                 <div class="flex-1 overflow-y-auto pb-6 hide-scrollbar relative">
-                    
-                    <!-- GALLERY CONTAINER WITH ARROWS AND SCROLL -->
+                    <!-- Dynamic Gallery Swiper inside Modal -->
                     <div class="w-full aspect-square md:aspect-video bg-black relative touch-pan-x" dir="ltr">
-                        <!-- Left Arrow -->
-                        <button onclick="scrollModalGallery(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer shadow-lg">
-                            <i class="fa-solid fa-chevron-left text-sm"></i>
+                        <!-- Navigation Arrows -->
+                        <button onclick="scrollModalGallery(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/70 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
                         </button>
-                        <!-- Right Arrow -->
-                        <button onclick="scrollModalGallery(1)" class="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer shadow-lg">
-                            <i class="fa-solid fa-chevron-right text-sm"></i>
+                        <button onclick="scrollModalGallery(1)" class="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/70 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer">
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
                         </button>
 
-                        <!-- Swiper Track -->
                         <div id="modal-image-swiper" class="w-full h-full overflow-x-scroll flex snap-x snap-mandatory scroll-smooth hide-scrollbar touch-pan-x" onscroll="syncSwiperImageCounter()">
-                            <!-- Images loaded dynamically -->
+                            <!-- Images dynamically loaded here -->
                         </div>
 
-                        <div class="absolute bottom-0 w-full h-20 bg-gradient-to-t from-panelbg via-panelbg/40 to-transparent pointer-events-none z-10"></div>
+                        <div class="absolute bottom-0 w-full h-20 bg-gradient-to-t from-panelbg via-panelbg/40 to-transparent pointer-events-none"></div>
                         
                         <div id="det-sold-badge" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sold-badge-fx px-6 py-2 rounded-xl text-lg font-black tracking-widest border border-white/20 transform -rotate-12 z-20 hidden">مباعة ❌</div>
                         
-                        <div class="absolute bottom-4 left-4 z-20 bg-black/80 backdrop-blur border border-white/10 text-white text-[10px] px-3 py-1 rounded-full font-bold">
+                        <div class="absolute bottom-4 left-4 z-20 bg-black/70 backdrop-blur border border-white/10 text-white text-[10px] px-3 py-1 rounded-full font-bold">
                             <i class="fa-solid fa-images text-neonred mr-1"></i> <span id="gallery-indicator-counter">1 / 1</span>
                         </div>
 
-                        <div class="absolute bottom-4 right-4 z-20">
+                        <div class="absolute bottom-4 right-4 z-20 flex items-center gap-2">
                             <span id="det-year" class="bg-white text-black px-3 py-1.5 rounded-xl font-black text-xs">2024</span>
                         </div>
                     </div>
 
-                    <!-- Specs Details -->
                     <div class="p-5 space-y-6 relative z-10">
                         <div>
                             <span id="det-cat" class="bg-white/10 backdrop-blur text-white border border-white/20 text-[9px] px-2.5 py-1 rounded-md font-bold uppercase tracking-wider mb-2 inline-block">Category</span>
@@ -421,7 +446,6 @@
                             <p id="det-desc" class="text-[10px] text-zinc-400 font-medium leading-relaxed whitespace-pre-wrap">لا توجد إضافات.</p>
                         </div>
 
-                        <!-- Form Section -->
                         <div id="booking-section" class="bg-gradient-to-b from-cardbg to-panelbg border border-white/10 p-6 rounded-3xl shadow-2xl relative overflow-hidden transition-all duration-300">
                             <div id="booking-form-wrapper" class="relative z-10 block">
                                 <h3 class="text-sm font-black text-white mb-2 flex items-center gap-2">
@@ -491,7 +515,9 @@
             </div>
         </div>
 
-        <!-- ================= ADMIN DASHBOARD ================= -->
+        <!-- ============================================================ -->
+        <!-- 5. PRO ADMIN DASHBOARD (IDARA)                               -->
+        <!-- ============================================================ -->
         <div id="biometricPinOverlay" class="fixed inset-0 bg-black/95 backdrop-blur-md z-[100] flex items-center justify-center hidden">
             <div class="w-80 p-8 glass-panel rounded-3xl text-center space-y-6 shadow-2xl">
                 <i class="fa-solid fa-user-shield text-white text-5xl"></i>
@@ -622,7 +648,6 @@
             </div>
         </section>
 
-        <!-- TOAST -->
         <div id="toastAlert" class="fixed top-6 left-1/2 -translate-x-1/2 z-[200] transform -translate-y-24 opacity-0 transition-all duration-500 pointer-events-none">
             <div class="bg-white text-black px-5 py-3.5 rounded-full shadow-[0_5px_30px_rgba(255,255,255,0.2)] flex items-center gap-3">
                 <i class="fa-solid fa-circle-check text-black text-sm"></i>
@@ -633,14 +658,16 @@
     </div>
 
     <script>
-        // ================= SUPABASE ENGINE =================
+        // =======================================================
+        // 🛑 SUPABASE CONFIGURATION (INJECTED & VERIFIED) 🛑
+        // =======================================================
         const SUPABASE_URL = 'https://smumscrjovrsudhsaczy.supabase.co'; 
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdW1zY3Jqb3Zyc3VkaHNhY3p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NjI2MzcsImV4cCI6MjEwMDMzODYzN30.TnYYE18XOI2RU21NRZVBSQDtd1h-PsTSsop8P3-Q-5o';
         
         let supabaseClient = null;
         if (SUPABASE_URL && SUPABASE_ANON_KEY) {
             try { supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } 
-            catch(e) { console.warn("Supabase load error:", e); }
+            catch(e) { console.warn("Supabase initialization error:", e); }
         }
         
         const CONFIG = {
@@ -710,7 +737,7 @@
                     state.vehicles = local ? JSON.parse(local) : DUMMY_DATA;
                 }
             } catch (err) {
-                console.warn("Using local fallback:", err);
+                console.warn("Using Local Storage Backup due to fetch error:", err);
                 const local = localStorage.getItem('digital_auto_db_v1');
                 state.vehicles = local ? JSON.parse(local) : DUMMY_DATA;
             }
@@ -722,10 +749,7 @@
             try {
                 if (supabaseClient) {
                     const { error } = await supabaseClient.from('digital_vehicles').upsert([car]);
-                    if (error) {
-                        alert("خطأ أثناء الحفظ فـ Supabase: " + error.message);
-                        return false;
-                    }
+                    if (error) throw error;
                 } else {
                     const index = state.vehicles.findIndex(v => String(v.id) === String(car.id));
                     if (index > -1) state.vehicles[index] = car;
@@ -735,7 +759,7 @@
                 await fetchVehicles();
                 return true;
             } catch (err) {
-                alert("حدث خطأ غير متوقع: " + err.message);
+                console.error("Save Error:", err);
                 return false;
             }
         }
@@ -774,8 +798,7 @@
             }
             if (search) {
                 filtered = filtered.filter(v => 
-                    (v.marque && v.marque.toLowerCase().includes(search)) || 
-                    (v.modele && v.modele.toLowerCase().includes(search))
+                    v.marque.toLowerCase().includes(search) || v.modele.toLowerCase().includes(search)
                 );
             }
 
@@ -790,17 +813,15 @@
                 const tagColor = car.typeCategory === 'commande' ? 'bg-red-600 text-white' : 'bg-white text-black';
                 const tagText = car.typeCategory === 'commande' ? 'بالطلب' : 'معرض';
 
-                const carImages = (Array.isArray(car.images) && car.images.length > 0) ? car.images : ["https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=600&q=80"];
-
-                let imagesHTML = carImages.map(img => `
+                let imagesHTML = car.images.map(img => `
                     <div class="snap-center-item w-full h-full shrink-0 relative">
                         <img src="${img}" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 pointer-events-none"></div>
                     </div>
                 `).join('');
 
-                let dotsHTML = carImages.length > 1 ? `<div class="absolute bottom-24 w-full flex justify-center gap-1.5 z-10 pointer-events-none">` + 
-                    carImages.map((_, i) => `<div class="w-1.5 h-1.5 rounded-full ${i===0?'bg-white':'bg-white/30'}"></div>`).join('') + `</div>` : '';
+                let dotsHTML = car.images.length > 1 ? `<div class="absolute bottom-24 w-full flex justify-center gap-1.5 z-10 pointer-events-none">` + 
+                    car.images.map((_, i) => `<div class="w-1.5 h-1.5 rounded-full ${i===0?'bg-white':'bg-white/30'}"></div>`).join('') + `</div>` : '';
 
                 grid.innerHTML += `
                 <div class="relative w-full aspect-square rounded-[24px] overflow-hidden ${isSold ? 'car-sold-glow' : 'border border-white/10 shadow-lg'} group">
@@ -817,22 +838,22 @@
 
                     <div class="absolute bottom-5 left-5 right-5 pointer-events-none text-right z-10">
                         <div class="flex justify-between items-end mb-3">
-                            <span class="text-[20px] font-brand font-black text-white drop-shadow-md" dir="ltr">${car.prix || ''}</span>
+                            <span class="text-[20px] font-brand font-black text-white drop-shadow-md" dir="ltr">${car.prix}</span>
                             <div class="text-right">
-                                <h4 class="text-[9px] text-zinc-300 font-bold uppercase tracking-widest leading-none mb-1 font-brand" dir="ltr">${car.marque || ''}</h4>
-                                <h3 class="text-lg font-black text-white leading-none drop-shadow-lg font-brand" dir="ltr">${car.modele || ''}</h3>
+                                <h4 class="text-[9px] text-zinc-300 font-bold uppercase tracking-widest leading-none mb-1 font-brand" dir="ltr">${car.marque}</h4>
+                                <h3 class="text-lg font-black text-white leading-none drop-shadow-lg font-brand" dir="ltr">${car.modele}</h3>
                             </div>
                         </div>
                         <div class="flex justify-end gap-2 text-[9px] font-bold">
-                            <span class="bg-black/80 backdrop-blur px-3 py-1.5 rounded-lg border border-white/10 text-white flex items-center gap-1.5"><i class="fa-solid fa-calendar-days text-neonred"></i> ${car.annee || ''}</span>
-                            <span class="bg-black/80 backdrop-blur px-3 py-1.5 rounded-lg border border-white/10 text-white flex items-center gap-1.5" dir="ltr"><i class="fa-solid fa-gauge-high text-neonred"></i> ${car.km || ''}</span>
+                            <span class="bg-black/80 backdrop-blur px-3 py-1.5 rounded-lg border border-white/10 text-white flex items-center gap-1.5"><i class="fa-solid fa-calendar-days text-neonred"></i> ${car.annee}</span>
+                            <span class="bg-black/80 backdrop-blur px-3 py-1.5 rounded-lg border border-white/10 text-white flex items-center gap-1.5" dir="ltr"><i class="fa-solid fa-gauge-high text-neonred"></i> ${car.km}</span>
                         </div>
                     </div>
                 </div>`;
             });
         }
 
-        // ================= GALLERY SCROLLER (FIXED MODAL SWIPE) =================
+        // ================= GALLERY MODAL SCROLLER =================
         function scrollModalGallery(direction) {
             const gallery = document.getElementById('modal-image-swiper');
             if(!gallery) return;
@@ -855,20 +876,18 @@
             if(!car) return;
 
             const swiper = document.getElementById('modal-image-swiper');
-            const carImages = (Array.isArray(car.images) && car.images.length > 0) ? car.images : ["https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=600&q=80"];
-
-            swiper.innerHTML = carImages.map(img => `
-                <div class="w-full h-full snap-center-item shrink-0 flex items-center justify-center bg-black relative min-w-full">
+            swiper.innerHTML = car.images.map(img => `
+                <div class="w-full h-full snap-center-item shrink-0 flex items-center justify-center bg-black relative">
                     <img src="${img}" class="w-full h-full object-cover">
                 </div>
             `).join('');
             swiper.scrollLeft = 0;
             syncSwiperImageCounter();
 
-            document.getElementById('det-title').innerText = `${car.marque || ''} ${car.modele || ''}`;
-            document.getElementById('det-price').innerText = car.prix || '';
-            document.getElementById('det-year').innerText = car.annee || '';
-            document.getElementById('det-km').innerText = car.km || '';
+            document.getElementById('det-title').innerText = `${car.marque} ${car.modele}`;
+            document.getElementById('det-price').innerText = car.prix;
+            document.getElementById('det-year').innerText = car.annee;
+            document.getElementById('det-km').innerText = car.km;
             document.getElementById('det-moteur').innerText = car.moteur || "-";
             document.getElementById('det-boite').innerText = car.boite || "-";
             document.getElementById('det-couleur').innerText = car.couleur || "-";
@@ -886,7 +905,7 @@
                 formSection.classList.remove('hidden');
             }
 
-            document.getElementById('lead-car-name').value = `${car.marque || ''} ${car.modele || ''} (${car.annee || ''})`;
+            document.getElementById('lead-car-name').value = `${car.marque} ${car.modele} (${car.annee})`;
             document.getElementById('booking-form-wrapper').classList.remove('hidden');
             document.getElementById('booking-form-wrapper').classList.add('block');
             document.getElementById('thank-you-wrapper').classList.add('hidden');
@@ -1000,17 +1019,16 @@
             container.innerHTML = '';
             container.classList.remove('hidden');
             
-            document.getElementById('f-image-label').innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> جاري معالجة وضغط الصور...`;
+            document.getElementById('f-image-label').innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> جاري المعالجة...`;
 
             for(let i=0; i<maxImages; i++) {
                 const b64 = await compressToSquare(files[i]);
                 state.tempImages.push(b64);
                 container.innerHTML += `<img src="${b64}" class="w-16 h-16 object-cover rounded-lg border border-white/20">`;
             }
-            document.getElementById('f-image-label').innerText = `تم جاهزية ${state.tempImages.length} صور بنجاح`;
+            document.getElementById('f-image-label').innerText = `تم رفع ${state.tempImages.length} صور`;
         }
 
-        // HIGH COMPRESSION FUNCTION (ULTRA LIGHTWEIGHT FOR SUPABASE)
         function compressToSquare(file) {
             return new Promise(resolve => {
                 const reader = new FileReader();
@@ -1023,10 +1041,9 @@
                         const startX = (img.width - size) / 2;
                         const startY = (img.height - size) / 2;
                         
-                        // Strict 450x450 resolution with 0.45 quality to guarantee < 70KB per image
-                        canvas.width = 450; canvas.height = 450;
-                        ctx.drawImage(img, startX, startY, size, size, 0, 0, 450, 450);
-                        resolve(canvas.toDataURL('image/jpeg', 0.45));
+                        canvas.width = 600; canvas.height = 600;
+                        ctx.drawImage(img, startX, startY, size, size, 0, 0, 600, 600);
+                        resolve(canvas.toDataURL('image/jpeg', 0.65));
                     };
                     img.src = e.target.result;
                 };
@@ -1044,14 +1061,14 @@
             const existingCar = state.vehicles.find(v => String(v.id) === String(carId));
             const finalImages = state.tempImages.length > 0 ? state.tempImages : (existingCar ? existingCar.images : []);
 
-            if(!finalImages || finalImages.length === 0) {
+            if(finalImages.length === 0) {
                 alert("يرجى إرفاق صورة واحدة على الأقل.");
                 btn.innerHTML = originalText;
                 return;
             }
 
             const payload = {
-                id: String(carId),
+                id: carId,
                 typeCategory: document.getElementById('f-category').value,
                 prix: document.getElementById('f-prix').value,
                 marque: document.getElementById('f-marque').value.toUpperCase(),
@@ -1068,7 +1085,8 @@
             };
 
             const success = await saveVehicleToDb(payload);
-            if(success) { showToast("تم الحفظ فـ Supabase بنجاح!"); resetAdminForm(); } 
+            if(success) { showToast("تم الحفظ!"); resetAdminForm(); } 
+            else alert("خطأ في الحفظ.");
             
             btn.innerHTML = originalText;
         }
@@ -1080,11 +1098,11 @@
             
             document.getElementById('form-car-id').value = car.id;
             document.getElementById('f-category').value = car.typeCategory || 'disponible';
-            document.getElementById('f-prix').value = car.prix || '';
-            document.getElementById('f-marque').value = car.marque || '';
-            document.getElementById('f-modele').value = car.modele || '';
-            document.getElementById('f-annee').value = car.annee || '';
-            document.getElementById('f-km').value = car.km || '';
+            document.getElementById('f-prix').value = car.prix;
+            document.getElementById('f-marque').value = car.marque;
+            document.getElementById('f-modele').value = car.modele;
+            document.getElementById('f-annee').value = car.annee;
+            document.getElementById('f-km').value = car.km;
             document.getElementById('f-boite').value = car.boite || 'Auto';
             document.getElementById('f-moteur').value = car.moteur || '';
             document.getElementById('f-couleur').value = car.couleur || '';
@@ -1092,8 +1110,7 @@
             
             state.tempImages = [];
             const container = document.getElementById('multi-img-preview-container');
-            const carImages = (Array.isArray(car.images) && car.images.length > 0) ? car.images : [];
-            container.innerHTML = carImages.map(img => `<img src="${img}" class="w-16 h-16 object-cover rounded-lg border border-white/20">`).join('');
+            container.innerHTML = car.images.map(img => `<img src="${img}" class="w-16 h-16 object-cover rounded-lg border border-white/20">`).join('');
             container.classList.remove('hidden');
             document.getElementById('f-image-label').innerText = "(اضغط لتغيير الصور)";
             
@@ -1118,15 +1135,13 @@
             
             state.vehicles.forEach(car => {
                 const isSold = car.status === 'vendu';
-                const firstImg = (Array.isArray(car.images) && car.images.length > 0) ? car.images[0] : "https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=600&q=80";
-
                 list.innerHTML += `
                 <div class="glass-panel border ${isSold ? 'border-red-600 shadow-[0_0_15px_rgba(220,38,38,0.3)]' : 'border-white/10'} p-3 rounded-2xl flex flex-col gap-3 transition-all" dir="ltr">
                     <div class="flex items-center gap-3">
-                        <img src="${firstImg}" class="w-14 h-14 rounded-xl object-cover border border-white/10 ${isSold ? 'grayscale' : ''}">
+                        <img src="${car.images[0]}" class="w-14 h-14 rounded-xl object-cover border border-white/10 ${isSold ? 'grayscale' : ''}">
                         <div class="flex-1 min-w-0">
-                            <h4 class="text-[11px] font-brand font-black text-white truncate">${car.marque || ''} ${car.modele || ''}</h4>
-                            <p class="text-[9px] text-zinc-400 mt-0.5">${car.prix || ''} • <span class="${car.typeCategory === 'commande' ? 'text-red-500' : 'text-white'}">${car.typeCategory || 'disponible'}</span></p>
+                            <h4 class="text-[11px] font-brand font-black text-white truncate">${car.marque} ${car.modele}</h4>
+                            <p class="text-[9px] text-zinc-400 mt-0.5">${car.prix} • <span class="${car.typeCategory === 'commande' ? 'text-red-500' : 'text-white'}">${car.typeCategory}</span></p>
                         </div>
                     </div>
 
