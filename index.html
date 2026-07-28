@@ -163,7 +163,6 @@
             animation: pulseRed 2s infinite;
         }
 
-        /* 🟢 PERFECT PAGE CONTAINER (NO TRANSFORM CONTAINING BLOCK TRAPS) 🟢 */
         .page-layer {
             position: absolute;
             inset: 0;
@@ -210,6 +209,7 @@
             
             <div class="relative z-10 flex flex-col items-center animate-slide-up-fade text-center px-4 w-full my-auto">
                 <div class="text-center space-y-4 my-auto">
+                    
                     <div class="relative inline-block mb-2 group">
                         <div class="absolute -inset-2 bg-gradient-to-r from-red-600/40 via-neonred/60 to-red-600/40 rounded-3xl blur-xl opacity-70 animate-pulse"></div>
                         <img src="logo.png" alt="DIGITAL AUTO CARS" class="h-20 md:h-28 object-contain mx-auto relative z-10 animate-elegant-float drop-shadow-[0_0_25px_rgba(255,0,0,0.8)] transition-transform duration-500 hover:scale-105" onerror="this.style.display='none'">
@@ -286,10 +286,10 @@
             </button>
         </section>
 
-        <!-- ================= PAGE 3: CATALOG (FIXED BOTTOM NAVBAR STRICTLY PINNED) ================= -->
+        <!-- ================= PAGE 3: CATALOG ================= -->
         <section id="page-3" class="page-layer flex-col bg-darkbg h-full overflow-hidden relative">
             
-            <!-- FIXED HEADER -->
+            <!-- HEADER -->
             <header class="glass-header shrink-0 z-30 px-5 py-4 flex justify-between items-center">
                 <button onclick="navigateTo('page-2')" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all cursor-pointer">
                     <i class="fa-solid fa-arrow-right"></i>
@@ -308,7 +308,6 @@
 
             <!-- SCROLLABLE CARS AREA ONLY -->
             <div id="catalog-scroll-area" class="flex-1 overflow-y-auto hide-scrollbar p-4 pb-36">
-                <!-- Social Links -->
                 <div class="flex justify-center gap-3 mb-4" dir="ltr">
                     <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
@@ -316,17 +315,15 @@
                     <a href="#" class="w-10 h-10 rounded-xl bg-red-900/20 border border-red-500/30 flex items-center justify-center text-neonred hover:bg-neonred hover:text-white transition-all"><i class="fa-solid fa-location-dot"></i></a>
                 </div>
 
-                <!-- Search Input -->
                 <div class="relative mb-5 max-w-lg mx-auto w-full">
                     <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 text-xs"></i>
                     <input type="text" id="searchInput" oninput="renderCatalog()" placeholder="ابحث عن ماركة، موديل..." class="w-full bg-cardbg border border-white/10 rounded-2xl pl-10 pr-4 py-3.5 text-[11px] font-bold text-white focus:outline-none focus:border-neonred transition-colors shadow-inner">
                 </div>
 
-                <!-- Cars Grid -->
                 <div id="carsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto w-full"></div>
             </div>
 
-            <!-- 🟢 FIXED BOTTOM NAVBAR (FIXED TO SCREEN BOTTOM ALWAYS) 🟢 -->
+            <!-- FIXED BOTTOM NAVBAR -->
             <nav class="glass-header fixed bottom-0 left-0 right-0 w-full max-w-[520px] lg:max-w-[900px] mx-auto flex justify-around items-center pt-3 pb-6 z-40 border-t border-white/10" id="mainBottomNav">
                 <button onclick="document.getElementById('catalog-scroll-area').scrollTo({top:0, behavior:'smooth'})" class="flex flex-col items-center text-white transition-all hover:scale-105 group cursor-pointer">
                     <i class="fa-solid fa-table-cells-large text-lg mb-1 group-hover:text-neonred transition-colors"></i>
@@ -348,16 +345,16 @@
             <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeDetailModal()"></div>
             <div class="relative w-full max-w-[520px] lg:max-w-[800px] mx-auto h-[92vh] bg-panelbg border-t border-white/10 rounded-t-[32px] flex flex-col transition-transform duration-500 translate-y-full" id="carDetailSheet">
                 
-                <!-- CLOSE BUTTON -->
-                <div class="absolute top-4 left-4 z-[70]">
-                    <button onclick="closeDetailModal()" class="w-8 h-8 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center hover:bg-neonred hover:border-neonred transition-all cursor-pointer shadow-2xl active:scale-90">
-                        <i class="fa-solid fa-xmark text-xs"></i>
+                <!-- 🔴 HIGH-VISIBILITY NEON GLOW CLOSE BUTTON (LOWERED) 🔴 -->
+                <div class="absolute top-7 left-5 z-[70]">
+                    <button onclick="closeDetailModal()" class="w-9 h-9 rounded-full bg-black/90 border border-neonred/60 text-white flex items-center justify-center hover:bg-neonred hover:text-white transition-all cursor-pointer shadow-[0_0_15px_rgba(255,0,0,0.5)] active:scale-90">
+                        <i class="fa-solid fa-xmark text-sm"></i>
                     </button>
                 </div>
 
                 <div class="flex-1 overflow-y-auto pb-6 hide-scrollbar relative">
                     
-                    <!-- HORIZONTAL SWIPER GALLERY -->
+                    <!-- SWIPER GALLERY -->
                     <div class="w-full aspect-square md:aspect-video bg-black relative touch-pan-x" dir="ltr">
                         <button onclick="scrollModalGallery(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer shadow-lg">
                             <i class="fa-solid fa-chevron-left text-xs"></i>
@@ -367,7 +364,7 @@
                         </button>
 
                         <div id="modal-image-swiper" class="w-full h-full overflow-x-scroll flex snap-x snap-mandatory scroll-smooth hide-scrollbar touch-pan-x" onscroll="syncSwiperImageCounter()">
-                            <!-- Images loaded dynamically -->
+                            <!-- Images dynamically loaded -->
                         </div>
 
                         <div class="absolute bottom-0 w-full h-20 bg-gradient-to-t from-panelbg via-panelbg/40 to-transparent pointer-events-none z-10"></div>
@@ -394,7 +391,6 @@
                             <span id="det-price" class="text-2xl font-brand font-black text-neonred drop-shadow-md" dir="ltr">000 M</span>
                         </div>
 
-                        <!-- Technical Specs -->
                         <div class="space-y-3">
                             <h4 class="text-[11px] font-black text-white flex items-center gap-2"><i class="fa-solid fa-list-check text-neonred"></i> البطاقة التقنية</h4>
                             <div class="grid grid-cols-2 gap-3" dir="ltr">
@@ -429,13 +425,11 @@
                             </div>
                         </div>
 
-                        <!-- Description -->
                         <div class="bg-cardbg border border-white/5 p-5 rounded-3xl space-y-3">
                             <h4 class="text-[11px] font-black text-white border-r-2 border-neonred pr-2">معلومات إضافية</h4>
                             <p id="det-desc" class="text-[10px] text-zinc-400 font-medium leading-relaxed whitespace-pre-wrap">لا توجد إضافات.</p>
                         </div>
 
-                        <!-- VIP Booking Form -->
                         <div id="booking-section" class="bg-gradient-to-b from-cardbg to-panelbg border border-white/10 p-6 rounded-3xl shadow-2xl relative overflow-hidden mt-6 transition-all duration-300">
                             <div id="booking-form-wrapper" class="relative z-10 block">
                                 <h3 class="text-sm font-black text-white mb-2 flex items-center gap-2">
@@ -542,7 +536,12 @@
                         <input type="hidden" id="form-car-id">
                         
                         <div class="grid grid-cols-2 gap-3">
-                            <select id="f-category" class="tech-input"><option value="disponible">متوفر في المعرض</option><option value="commande">استيراد بالطلب</option></select>
+                            <!-- 🟢 3RD CATEGORY VARIANT ADDED HERE 🟢 -->
+                            <select id="f-category" class="tech-input">
+                                <option value="disponible">متوفر في المعرض فقط</option>
+                                <option value="commande">استيراد بالطلب فقط</option>
+                                <option value="both">كلاهما (معرض + استيراد بالطلب)</option>
+                            </select>
                             <input type="text" id="f-prix" placeholder="السعر (مثال: 850M)" required class="tech-input" dir="ltr">
                         </div>
 
@@ -567,7 +566,7 @@
                         <div class="border-2 border-white/10 border-dashed rounded-2xl p-6 text-center relative bg-black">
                             <input type="file" id="f-image-multiple" accept="image/*" multiple class="absolute inset-0 opacity-0 cursor-pointer z-10" onchange="handleMultipleImages(event)">
                             <div class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-2"><i class="fa-solid fa-images text-white text-lg"></i></div>
-                            <p class="text-[10px] text-zinc-300 font-bold" id="f-image-label">اضغط لرفع صور السيارة (حد أقصى 4)</p>
+                            <p class="text-[10px] text-zinc-300 font-bold" id="f-image-label">اضغط لرفع صور السيارة (حد أقصى 20 صورة)</p>
                             <div id="multi-img-preview-container" class="flex gap-2 mt-4 overflow-x-auto hide-scrollbar hidden"></div>
                         </div>
 
@@ -632,9 +631,9 @@
         const DUMMY_DATA = [
             { 
                 id: "id_1", marque: "MERCEDES-BENZ", modele: "Classe G 63 AMG", prix: "4 200M", annee: "2024", km: "0 km", 
-                typeCategory: "commande", moteur: "V8 Bi-Turbo 585ch", boite: "Auto 9G", couleur: "Noir Obisidien",
+                typeCategory: "both", moteur: "V8 Bi-Turbo 585ch", boite: "Auto 9G", couleur: "Noir Obisidien",
                 desc: "Full option. Livraison en 30 jours.", 
-                images: ["https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=600&q=80", "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=600&q=80"], 
+                images: ["https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=800&q=80"], 
                 status: "disponible", createdAt: Date.now() 
             }
         ];
@@ -741,7 +740,7 @@
             await saveVehicleToDb(car);
         }
 
-        // ================= CATALOG RENDERER WITH AUTO-SLIDE =================
+        // ================= CATALOG RENDERER WITH 3RD VARIANT FILTERING =================
         function renderCatalog() {
             const grid = document.getElementById('carsGrid');
             if(!grid) return;
@@ -753,8 +752,10 @@
             const search = searchEl ? searchEl.value.toLowerCase().trim() : '';
             
             let filtered = Array.isArray(state.vehicles) ? state.vehicles : [];
+            
+            // 🟢 SMART 3-WAY FILTERING (shows 'both' in both categories) 🟢
             if(state.currentScope !== 'all') {
-                filtered = filtered.filter(v => v && v.typeCategory === state.currentScope);
+                filtered = filtered.filter(v => v && (v.typeCategory === state.currentScope || v.typeCategory === 'both'));
             }
             if (search) {
                 filtered = filtered.filter(v => 
@@ -772,14 +773,23 @@
             filtered.forEach(car => {
                 if(!car) return;
                 const isSold = car.status === 'vendu';
-                const tagColor = car.typeCategory === 'commande' ? 'bg-red-600 text-white' : 'bg-white text-black';
-                const tagText = car.typeCategory === 'commande' ? 'بالطلب' : 'معرض';
+                
+                // Tag styling for 3 categories
+                let tagColor = 'bg-white text-black';
+                let tagText = 'معرض';
+                if (car.typeCategory === 'commande') {
+                    tagColor = 'bg-red-600 text-white';
+                    tagText = 'بالطلب';
+                } else if (car.typeCategory === 'both') {
+                    tagColor = 'bg-gradient-to-r from-red-600 to-zinc-900 text-white border border-red-500/50';
+                    tagText = 'معرض + بالطلب';
+                }
 
-                const carImages = (Array.isArray(car.images) && car.images.length > 0) ? car.images : ["https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=600&q=80"];
+                const carImages = (Array.isArray(car.images) && car.images.length > 0) ? car.images : ["https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=800&q=80"];
 
                 let imagesHTML = carImages.map(img => `
                     <div class="snap-center-item w-full h-full shrink-0 relative">
-                        <img src="${img}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=600&q=80'">
+                        <img src="${img}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=800&q=80'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 pointer-events-none"></div>
                     </div>
                 `).join('');
@@ -847,7 +857,7 @@
             });
         }
 
-        // ================= GALLERY SCROLLER FOR DETAILS MODAL =================
+        // ================= GALLERY SCROLLER =================
         function scrollModalGallery(direction) {
             const gallery = document.getElementById('modal-image-swiper');
             if(!gallery) return;
@@ -869,7 +879,7 @@
             const car = state.vehicles.find(v => v && String(v.id) === String(id));
             if(!car) return;
 
-            const carImages = (Array.isArray(car.images) && car.images.length > 0) ? car.images : ["https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=600&q=80"];
+            const carImages = (Array.isArray(car.images) && car.images.length > 0) ? car.images : ["https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=800&q=80"];
 
             const swiper = document.getElementById('modal-image-swiper');
             swiper.innerHTML = carImages.map(img => `
@@ -888,7 +898,11 @@
             document.getElementById('det-boite').innerText = car.boite || "-";
             document.getElementById('det-couleur').innerText = car.couleur || "-";
             document.getElementById('det-desc').innerText = car.desc || "لا توجد معلومات إضافية.";
-            document.getElementById('det-cat').innerText = car.typeCategory === 'commande' ? 'استيراد بالطلب' : 'متوفرة في المعرض';
+            
+            let catLabel = 'متوفرة في المعرض';
+            if(car.typeCategory === 'commande') catLabel = 'استيراد بالطلب';
+            else if(car.typeCategory === 'both') catLabel = 'معرض + استيراد بالطلب';
+            document.getElementById('det-cat').innerText = catLabel;
             
             const soldBadge = document.getElementById('det-sold-badge');
             const formSection = document.getElementById('booking-section');
@@ -970,7 +984,7 @@
             }, 600);
         }
 
-        // ================= ADMIN SYSTEM =================
+        // ================= ADMIN SYSTEM (MAX 20 IMAGES + HIGH RES) =================
         function openAdminAuth() {
             if(state.isOwnerSession) {
                 const adminCenter = document.getElementById('ownerCommandCenter');
@@ -1015,23 +1029,24 @@
             const files = e.target.files;
             if(!files || files.length === 0) return;
             
-            const maxImages = Math.min(files.length, 4);
+            // 🟢 UPGRADED TO MAX 20 IMAGES 🟢
+            const maxImages = Math.min(files.length, 20);
             state.tempImages = [];
             const container = document.getElementById('multi-img-preview-container');
             container.innerHTML = '';
             container.classList.remove('hidden');
             
-            document.getElementById('f-image-label').innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> جاري معالجة وضغط الصور...`;
+            document.getElementById('f-image-label').innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> جاري معالجة ${maxImages} صور بجودة عالية HD...`;
 
             for(let i=0; i<maxImages; i++) {
                 const b64 = await compressToSquare(files[i]);
                 state.tempImages.push(b64);
                 container.innerHTML += `<img src="${b64}" class="w-16 h-16 object-cover rounded-lg border border-white/20">`;
             }
-            document.getElementById('f-image-label').innerText = `تم جاهزية ${state.tempImages.length} صور بنجاح`;
+            document.getElementById('f-image-label').innerText = `تمت جاهزية ${state.tempImages.length} صور بجودة عالية HD`;
         }
 
-        // ULTRA LIGHTWEIGHT COMPRESSION FOR SUPABASE SAFETY (< 50KB PER IMAGE)
+        // 🟢 HIGH QUALITY COMPRESSION (800x800 - HIGH CRISP RES) 🟢
         function compressToSquare(file) {
             return new Promise(resolve => {
                 const reader = new FileReader();
@@ -1044,9 +1059,9 @@
                         const startX = (img.width - size) / 2;
                         const startY = (img.height - size) / 2;
                         
-                        canvas.width = 400; canvas.height = 400;
-                        ctx.drawImage(img, startX, startY, size, size, 0, 0, 400, 400);
-                        resolve(canvas.toDataURL('image/jpeg', 0.45));
+                        canvas.width = 800; canvas.height = 800;
+                        ctx.drawImage(img, startX, startY, size, size, 0, 0, 800, 800);
+                        resolve(canvas.toDataURL('image/jpeg', 0.82));
                     };
                     img.src = e.target.result;
                 };
@@ -1126,7 +1141,7 @@
             state.tempImages = [];
             document.getElementById('multi-img-preview-container').innerHTML = '';
             document.getElementById('multi-img-preview-container').classList.add('hidden');
-            document.getElementById('f-image-label').innerText = "اضغط لرفع صور السيارة (حد أقصى 4)";
+            document.getElementById('f-image-label').innerText = "اضغط لرفع صور السيارة (حد أقصى 20 صورة)";
             document.getElementById('btn-cancel-edit').classList.add('hidden');
         }
 
@@ -1139,7 +1154,7 @@
             state.vehicles.forEach(car => {
                 if(!car) return;
                 const isSold = car.status === 'vendu';
-                const firstImg = (Array.isArray(car.images) && car.images.length > 0) ? car.images[0] : "https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=600&q=80";
+                const firstImg = (Array.isArray(car.images) && car.images.length > 0) ? car.images[0] : "https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=800&q=80";
 
                 list.innerHTML += `
                 <div class="glass-panel border ${isSold ? 'border-red-600 shadow-[0_0_15px_rgba(220,38,38,0.3)]' : 'border-white/10'} p-3 rounded-2xl flex flex-col gap-3 transition-all" dir="ltr">
