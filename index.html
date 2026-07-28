@@ -9,8 +9,7 @@
     <!-- 🛑 MARKETING PIXELS (TIKTOK / META) 🛑                 -->
     <!-- ======================================================= -->
     <script>
-        // Example Meta Pixel: !function(f,b,e,v,n,t,s) { ... fbq('init', 'YOUR_PIXEL_ID'); fbq('track', 'PageView'); }
-        // Example TikTok Pixel: !function(w,d,t) { ... ttq.load('YOUR_PIXEL_ID'); ttq.page(); }
+        // Meta Pixel & TikTok Pixel Placeholders
     </script>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -166,18 +165,19 @@
             inset: 0;
             width: 100%;
             min-height: 100%;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: opacity 0.4s ease, transform 0.4s ease;
             opacity: 0;
             pointer-events: none;
             z-index: 10;
+            display: none;
         }
         .page-layer.active {
             opacity: 1;
             pointer-events: auto;
             transform: scale(1);
             z-index: 20;
+            display: flex;
         }
-        .page-layer.hidden-scale { transform: scale(0.95); display: none; }
 
         .tech-input {
             width: 100%;
@@ -201,13 +201,12 @@
         <div class="bg-noise"></div>
 
         <!-- ================= PAGE 1 ================= -->
-        <section id="page-1" class="page-layer active flex flex-col justify-center items-center bg-black relative overflow-hidden p-6">
+        <section id="page-1" class="page-layer active flex-col justify-center items-center bg-black relative overflow-hidden p-6">
             <div class="absolute top-[10%] left-[-20%] w-96 h-96 bg-red-600/20 rounded-full blur-[120px] animate-pulse-red pointer-events-none"></div>
             <div class="absolute bottom-[10%] right-[-20%] w-96 h-96 bg-red-700/20 rounded-full blur-[120px] animate-pulse-red pointer-events-none" style="animation-delay: 1.5s;"></div>
             
             <div class="relative z-10 flex flex-col items-center animate-slide-up-fade text-center px-4 w-full my-auto">
                 <div class="text-center space-y-4">
-                    <!-- لوحة الشعار (إذا عندك logo.png تحطها هنا) -->
                     <img src="logo.png" alt="DIGITAL AUTO CARS" class="h-16 md:h-20 object-contain mx-auto mb-2 drop-shadow-[0_0_20px_rgba(255,0,0,0.4)]" onerror="this.style.display='none'">
 
                     <h1 class="text-3xl md:text-5xl font-brand font-black text-white tracking-tighter uppercase leading-none drop-shadow-[0_0_25px_rgba(255,0,0,0.6)] animate-breathing-glow" dir="ltr">
@@ -236,7 +235,7 @@
         </section>
 
         <!-- ================= PAGE 2 ================= -->
-        <section id="page-2" class="page-layer hidden-scale flex flex-col justify-center items-center bg-darkbg p-6">
+        <section id="page-2" class="page-layer flex-col justify-center items-center bg-darkbg p-6">
             <div class="w-full relative z-10 flex flex-col items-center mb-8">
                 <h2 class="text-2xl md:text-3xl font-brand font-black text-white tracking-tight uppercase" dir="ltr">DIGITAL AUTO CARS</h2>
                 <p class="text-[11px] text-neonred font-bold tracking-widest mt-1">اختر وجهتك المفضلة</p>
@@ -279,14 +278,14 @@
         </section>
 
         <!-- ================= PAGE 3: CATALOG ================= -->
-        <section id="page-3" class="page-layer hidden-scale flex flex-col bg-darkbg">
+        <section id="page-3" class="page-layer flex-col bg-darkbg">
             <header class="glass-header sticky top-0 z-40 px-5 py-4 flex justify-between items-center">
                 <button onclick="navigateTo('page-2')" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all cursor-pointer">
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
                 
                 <div class="flex flex-col items-center cursor-pointer group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                    <img src="logo.png" alt="DIGITAL AUTO" class="h-7 object-contain" onerror="this.style.display='none'; document.getElementById('txt-head-title').style.display='block';">
+                    <img src="logo.png" alt="DIGITAL AUTO" class="h-7 object-contain" onerror="this.style.display='none'; document.getElementById('txt-head-title').classList.remove('hidden');">
                     <h1 id="txt-head-title" class="text-sm font-brand font-black text-white tracking-widest uppercase hidden">DIGITAL AUTO</h1>
                     <h2 id="header-subtitle" class="text-[8px] font-bold text-neonred tracking-widest mt-0.5 uppercase">الكتالوج</h2>
                 </div>
@@ -330,8 +329,8 @@
             </nav>
         </section>
 
-        <!-- ================= MODAL FICHE TECHNIQUE WITH FULL RIGHT/LEFT SCROLL ================= -->
-        <div id="carDetailModal" class="fixed inset-0 z-50 hidden flex flex-col justify-end">
+        <!-- ================= MODAL FICHE TECHNIQUE WITH FULL SCROLL ================= -->
+        <div id="carDetailModal" class="fixed inset-0 z-50 hidden flex-col justify-end">
             <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeDetailModal()"></div>
             <div class="relative w-full max-w-[520px] lg:max-w-[800px] mx-auto h-[92vh] bg-panelbg border-t border-white/10 rounded-t-[32px] flex flex-col transition-transform duration-500 translate-y-full" id="carDetailSheet">
                 
@@ -341,18 +340,14 @@
 
                 <div class="flex-1 overflow-y-auto pb-6 hide-scrollbar relative">
                     
-                    <!-- GALLERY CONTAINER WITH ARROWS AND SCROLL -->
                     <div class="w-full aspect-square md:aspect-video bg-black relative touch-pan-x" dir="ltr">
-                        <!-- Left Arrow -->
                         <button onclick="scrollModalGallery(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer shadow-lg">
                             <i class="fa-solid fa-chevron-left text-sm"></i>
                         </button>
-                        <!-- Right Arrow -->
                         <button onclick="scrollModalGallery(1)" class="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer shadow-lg">
                             <i class="fa-solid fa-chevron-right text-sm"></i>
                         </button>
 
-                        <!-- Swiper Track -->
                         <div id="modal-image-swiper" class="w-full h-full overflow-x-scroll flex snap-x snap-mandatory scroll-smooth hide-scrollbar touch-pan-x" onscroll="syncSwiperImageCounter()">
                             <!-- Images loaded dynamically -->
                         </div>
@@ -370,7 +365,6 @@
                         </div>
                     </div>
 
-                    <!-- Specs Details -->
                     <div class="p-5 space-y-6 relative z-10">
                         <div>
                             <span id="det-cat" class="bg-white/10 backdrop-blur text-white border border-white/20 text-[9px] px-2.5 py-1 rounded-md font-bold uppercase tracking-wider mb-2 inline-block">Category</span>
@@ -421,7 +415,6 @@
                             <p id="det-desc" class="text-[10px] text-zinc-400 font-medium leading-relaxed whitespace-pre-wrap">لا توجد إضافات.</p>
                         </div>
 
-                        <!-- Form Section -->
                         <div id="booking-section" class="bg-gradient-to-b from-cardbg to-panelbg border border-white/10 p-6 rounded-3xl shadow-2xl relative overflow-hidden transition-all duration-300">
                             <div id="booking-form-wrapper" class="relative z-10 block">
                                 <h3 class="text-sm font-black text-white mb-2 flex items-center gap-2">
@@ -504,7 +497,7 @@
             </div>
         </div>
 
-        <section id="ownerCommandCenter" class="hidden flex-col bg-darkbg z-50 fixed inset-0 overflow-hidden">
+        <section id="ownerCommandCenter" class="hidden flex-col bg-darkbg z-[60] fixed inset-0 overflow-hidden">
             <div class="p-5 border-b border-white/5 bg-panelbg sticky top-0 z-20 flex justify-between items-center shadow-lg">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white text-lg border border-white/20"><i class="fa-solid fa-gear"></i></div>
@@ -672,29 +665,31 @@
             }
         ];
 
-        // ================= NAVIGATION =================
+        // ================= NAVIGATION SAFE ENGINE =================
         function navigateTo(pageId) {
             document.querySelectorAll('.page-layer').forEach(p => {
                 p.classList.remove('active');
-                p.classList.add('hidden-scale');
-                setTimeout(() => { if(!p.classList.contains('active')) p.style.display = 'none'; }, 500);
+                p.style.display = 'none';
             });
             
             const target = document.getElementById(pageId);
-            target.style.display = 'flex';
-            setTimeout(() => {
-                target.classList.remove('hidden-scale');
+            if(target) {
+                target.style.display = 'flex';
+                void target.offsetWidth; // Trigger DOM reflow
                 target.classList.add('active');
-            }, 10);
+            }
             
-            if(pageId === 'page-3') renderCatalog();
+            if(pageId === 'page-3') {
+                try { renderCatalog(); } catch(e) { console.error(e); }
+            }
         }
 
         function enterCatalog(scope) {
             state.currentScope = scope;
             const sub = document.getElementById('header-subtitle');
-            sub.innerText = scope === 'disponible' ? "متوفر في المعرض" : "استيراد حسب الطلب";
-            document.getElementById('searchInput').value = '';
+            if(sub) sub.innerText = scope === 'disponible' ? "متوفر في المعرض" : "استيراد حسب الطلب";
+            const searchEl = document.getElementById('searchInput');
+            if(searchEl) searchEl.value = '';
             navigateTo('page-3');
         }
 
@@ -706,16 +701,25 @@
                     if (error) throw error;
                     state.vehicles = data || [];
                 } else {
-                    const local = localStorage.getItem('digital_auto_db_v1');
-                    state.vehicles = local ? JSON.parse(local) : DUMMY_DATA;
+                    getLocalStorageVehicles();
                 }
             } catch (err) {
                 console.warn("Using local fallback:", err);
+                getLocalStorageVehicles();
+            }
+            
+            const page3 = document.getElementById('page-3');
+            if(page3 && page3.classList.contains('active')) renderCatalog();
+            if(state.isOwnerSession) renderAdminInventory();
+        }
+
+        function getLocalStorageVehicles() {
+            try {
                 const local = localStorage.getItem('digital_auto_db_v1');
                 state.vehicles = local ? JSON.parse(local) : DUMMY_DATA;
+            } catch(e) {
+                state.vehicles = DUMMY_DATA;
             }
-            if(document.getElementById('page-3').classList.contains('active')) renderCatalog();
-            if(state.isOwnerSession) renderAdminInventory();
         }
 
         async function saveVehicleToDb(car) {
@@ -766,16 +770,19 @@
         // ================= CATALOG RENDERER =================
         function renderCatalog() {
             const grid = document.getElementById('carsGrid');
-            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            if(!grid) return;
             
-            let filtered = state.vehicles;
+            const searchEl = document.getElementById('searchInput');
+            const search = searchEl ? searchEl.value.toLowerCase().trim() : '';
+            
+            let filtered = Array.isArray(state.vehicles) ? state.vehicles : [];
             if(state.currentScope !== 'all') {
-                filtered = filtered.filter(v => v.typeCategory === state.currentScope);
+                filtered = filtered.filter(v => v && v.typeCategory === state.currentScope);
             }
             if (search) {
                 filtered = filtered.filter(v => 
-                    (v.marque && v.marque.toLowerCase().includes(search)) || 
-                    (v.modele && v.modele.toLowerCase().includes(search))
+                    (v && v.marque && v.marque.toLowerCase().includes(search)) || 
+                    (v && v.modele && v.modele.toLowerCase().includes(search))
                 );
             }
 
@@ -786,6 +793,7 @@
             }
 
             filtered.forEach(car => {
+                if(!car) return;
                 const isSold = car.status === 'vendu';
                 const tagColor = car.typeCategory === 'commande' ? 'bg-red-600 text-white' : 'bg-white text-black';
                 const tagText = car.typeCategory === 'commande' ? 'بالطلب' : 'معرض';
@@ -794,7 +802,7 @@
 
                 let imagesHTML = carImages.map(img => `
                     <div class="snap-center-item w-full h-full shrink-0 relative">
-                        <img src="${img}" class="w-full h-full object-cover">
+                        <img src="${img}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=600&q=80'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 pointer-events-none"></div>
                     </div>
                 `).join('');
@@ -832,7 +840,7 @@
             });
         }
 
-        // ================= GALLERY SCROLLER (FIXED MODAL SWIPE) =================
+        // ================= GALLERY SCROLLER (MODAL SWIPE) =================
         function scrollModalGallery(direction) {
             const gallery = document.getElementById('modal-image-swiper');
             if(!gallery) return;
@@ -842,7 +850,7 @@
 
         function syncSwiperImageCounter() {
             const gallery = document.getElementById('modal-image-swiper');
-            if(!gallery) return;
+            if(!gallery || !gallery.clientWidth) return;
             const currentIndex = Math.round(gallery.scrollLeft / gallery.clientWidth) + 1;
             const total = gallery.children.length;
             const counter = document.getElementById('gallery-indicator-counter');
@@ -851,7 +859,7 @@
 
         // ================= DETAILS & LEAD FORM =================
         function openCarDetails(id) {
-            const car = state.vehicles.find(v => String(v.id) === String(id));
+            const car = state.vehicles.find(v => v && String(v.id) === String(id));
             if(!car) return;
 
             const swiper = document.getElementById('modal-image-swiper');
@@ -893,7 +901,9 @@
             document.getElementById('thank-you-wrapper').classList.remove('flex');
             document.getElementById('leadForm').reset();
 
-            document.getElementById('carDetailModal').classList.remove('hidden');
+            const modal = document.getElementById('carDetailModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
             setTimeout(() => {
                 document.getElementById('carDetailSheet').classList.remove('translate-y-full');
             }, 10);
@@ -902,7 +912,9 @@
         function closeDetailModal() {
             document.getElementById('carDetailSheet').classList.add('translate-y-full');
             setTimeout(() => {
-                document.getElementById('carDetailModal').classList.add('hidden');
+                const modal = document.getElementById('carDetailModal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
             }, 400);
         }
 
@@ -954,8 +966,9 @@
         // ================= ADMIN SYSTEM =================
         function openAdminAuth() {
             if(state.isOwnerSession) {
-                document.getElementById('ownerCommandCenter').classList.remove('hidden');
-                document.getElementById('ownerCommandCenter').classList.add('flex');
+                const adminCenter = document.getElementById('ownerCommandCenter');
+                adminCenter.classList.remove('hidden');
+                adminCenter.classList.add('flex');
                 document.getElementById('admin-google-script').value = CONFIG.googleScriptUrl;
                 renderAdminInventory();
             } else {
@@ -980,8 +993,9 @@
         function lockAdminSession() {
             state.isOwnerSession = false;
             localStorage.setItem('isOwnerVerified', 'false');
-            document.getElementById('ownerCommandCenter').classList.add('hidden');
-            document.getElementById('ownerCommandCenter').classList.remove('flex');
+            const adminCenter = document.getElementById('ownerCommandCenter');
+            adminCenter.classList.add('hidden');
+            adminCenter.classList.remove('flex');
             showToast("تم القفل");
         }
         function saveApiKeys() {
@@ -1010,7 +1024,7 @@
             document.getElementById('f-image-label').innerText = `تم جاهزية ${state.tempImages.length} صور بنجاح`;
         }
 
-        // HIGH COMPRESSION FUNCTION (ULTRA LIGHTWEIGHT FOR SUPABASE)
+        // ULTRA LIGHTWEIGHT COMPRESSION (< 50KB PER IMAGE FOR SUPABASE REST LIMITS)
         function compressToSquare(file) {
             return new Promise(resolve => {
                 const reader = new FileReader();
@@ -1023,9 +1037,8 @@
                         const startX = (img.width - size) / 2;
                         const startY = (img.height - size) / 2;
                         
-                        // Strict 450x450 resolution with 0.45 quality to guarantee < 70KB per image
-                        canvas.width = 450; canvas.height = 450;
-                        ctx.drawImage(img, startX, startY, size, size, 0, 0, 450, 450);
+                        canvas.width = 400; canvas.height = 400;
+                        ctx.drawImage(img, startX, startY, size, size, 0, 0, 400, 400);
                         resolve(canvas.toDataURL('image/jpeg', 0.45));
                     };
                     img.src = e.target.result;
@@ -1041,7 +1054,7 @@
             btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-black"></i> جاري الحفظ...`;
 
             const carId = document.getElementById('form-car-id').value || `car_${Date.now()}`;
-            const existingCar = state.vehicles.find(v => String(v.id) === String(carId));
+            const existingCar = state.vehicles.find(v => v && String(v.id) === String(carId));
             const finalImages = state.tempImages.length > 0 ? state.tempImages : (existingCar ? existingCar.images : []);
 
             if(!finalImages || finalImages.length === 0) {
@@ -1068,13 +1081,13 @@
             };
 
             const success = await saveVehicleToDb(payload);
-            if(success) { showToast("تم الحفظ فـ Supabase بنجاح!"); resetAdminForm(); } 
+            if(success) { showToast("تم الحفظ بنجاح!"); resetAdminForm(); } 
             
             btn.innerHTML = originalText;
         }
 
         function editCar(id) {
-            const car = state.vehicles.find(v => String(v.id) === String(id));
+            const car = state.vehicles.find(v => v && String(v.id) === String(id));
             if(!car) return;
             document.getElementById('btn-cancel-edit').classList.remove('hidden');
             
@@ -1117,6 +1130,7 @@
             document.getElementById('admin-total-cars').innerText = state.vehicles.length;
             
             state.vehicles.forEach(car => {
+                if(!car) return;
                 const isSold = car.status === 'vendu';
                 const firstImg = (Array.isArray(car.images) && car.images.length > 0) ? car.images[0] : "https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=600&q=80";
 
@@ -1152,6 +1166,7 @@
 
         function showToast(msg) {
             const toast = document.getElementById('toastAlert');
+            if(!toast) return;
             document.getElementById('toast-txt').innerText = msg;
             toast.classList.replace('-translate-y-24', 'translate-y-0');
             toast.classList.replace('opacity-0', 'opacity-100');
