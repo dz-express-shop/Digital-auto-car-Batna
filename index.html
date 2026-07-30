@@ -132,7 +132,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .glass-header {
-            background: rgba(5, 5, 5, 0.95);
+            background: rgba(5, 5, 5, 0.92);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -242,7 +242,7 @@
         </section>
 
         <!-- ================= PAGE 2: CHOICES ================= -->
-        <section id="page-2" class="page-layer flex-col justify-center items-center bg-darkbg p-6 overflow-y-auto hide-scrollbar">
+        <section id="page-2" class="page-layer hidden-scale flex-col justify-center items-center bg-darkbg p-6 overflow-y-auto hide-scrollbar">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none mix-blend-overlay"></div>
             
             <div class="w-full relative z-10 flex flex-col items-center mb-8">
@@ -287,7 +287,7 @@
         </section>
 
         <!-- ================= PAGE 3: CATALOG ================= -->
-        <section id="page-3" class="page-layer flex-col bg-darkbg h-full overflow-hidden relative">
+        <section id="page-3" class="page-layer hidden-scale flex-col bg-darkbg h-full overflow-hidden relative">
             
             <!-- HEADER -->
             <header class="glass-header shrink-0 z-30 px-5 py-4 flex justify-between items-center">
@@ -308,11 +308,28 @@
 
             <!-- SCROLLABLE CARS AREA ONLY -->
             <div id="catalog-scroll-area" class="flex-1 overflow-y-auto hide-scrollbar p-4 pb-36">
+                
+                <!-- 🔗 قسم روابط التواصل الاجتماعي 🔗 -->
                 <div class="flex justify-center gap-3 mb-4" dir="ltr">
-                    <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all"><i class="https://www.facebook.com/profile.php?id=61578045595012"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all"><i class="https://www.instagram.com/digital_auto_cars?igsh=MjM3NGdtbWR0eHBx&utm_source=qr"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-xl bg-red-900/20 border border-red-500/30 flex items-center justify-center text-neonred hover:bg-neonred hover:text-white transition-all"><i class="https://maps.app.goo.gl/iNRgBdUMPwdtD3Z9A"></i></a>
+                    <!-- رابط الفيسبوك 👇 -->
+                    <a href="ضع_رابط_الفيسبوك_هنا" target="_blank" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all shadow-md">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    
+                    <!-- رابط الإنستغرام 👇 -->
+                    <a href="ضع_رابط_الانستغرام_هنا" target="_blank" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all shadow-md">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    
+                    <!-- رابط التيك توك 👇 -->
+                    <a href="ضع_رابط_التيك_توك_هنا" target="_blank" class="w-10 h-10 rounded-xl bg-cardbg border border-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all shadow-md">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+                    
+                    <!-- رابط خريطة الموقع 👇 -->
+                    <a href="ضع_رابط_الخريطة_هنا" target="_blank" class="w-10 h-10 rounded-xl bg-red-900/20 border border-red-500/30 flex items-center justify-center text-neonred hover:bg-neonred hover:text-white transition-all shadow-md">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </a>
                 </div>
 
                 <div class="relative mb-5 max-w-lg mx-auto w-full">
@@ -345,7 +362,7 @@
             <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeDetailModal()"></div>
             <div class="relative w-full max-w-[520px] lg:max-w-[800px] mx-auto h-[92vh] bg-panelbg border-t border-white/10 rounded-t-[32px] flex flex-col transition-transform duration-500 translate-y-full" id="carDetailSheet">
                 
-                <!-- 🔴 HIGH-VISIBILITY NEON GLOW CLOSE BUTTON (LOWERED) 🔴 -->
+                <!-- CLOSE BUTTON -->
                 <div class="absolute top-7 left-5 z-[70]">
                     <button onclick="closeDetailModal()" class="w-9 h-9 rounded-full bg-black/90 border border-neonred/60 text-white flex items-center justify-center hover:bg-neonred hover:text-white transition-all cursor-pointer shadow-[0_0_15px_rgba(255,0,0,0.5)] active:scale-90">
                         <i class="fa-solid fa-xmark text-sm"></i>
@@ -354,7 +371,6 @@
 
                 <div class="flex-1 overflow-y-auto pb-6 hide-scrollbar relative">
                     
-                    <!-- SWIPER GALLERY -->
                     <div class="w-full aspect-square md:aspect-video bg-black relative touch-pan-x" dir="ltr">
                         <button onclick="scrollModalGallery(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center active:scale-90 transition cursor-pointer shadow-lg">
                             <i class="fa-solid fa-chevron-left text-xs"></i>
@@ -364,7 +380,7 @@
                         </button>
 
                         <div id="modal-image-swiper" class="w-full h-full overflow-x-scroll flex snap-x snap-mandatory scroll-smooth hide-scrollbar touch-pan-x" onscroll="syncSwiperImageCounter()">
-                            <!-- Images dynamically loaded -->
+                            <!-- Images loaded dynamically -->
                         </div>
 
                         <div class="absolute bottom-0 w-full h-20 bg-gradient-to-t from-panelbg via-panelbg/40 to-transparent pointer-events-none z-10"></div>
@@ -391,6 +407,7 @@
                             <span id="det-price" class="text-2xl font-brand font-black text-neonred drop-shadow-md" dir="ltr">000 M</span>
                         </div>
 
+                        <!-- Technical Specs -->
                         <div class="space-y-3">
                             <h4 class="text-[11px] font-black text-white flex items-center gap-2"><i class="fa-solid fa-list-check text-neonred"></i> البطاقة التقنية</h4>
                             <div class="grid grid-cols-2 gap-3" dir="ltr">
@@ -425,11 +442,13 @@
                             </div>
                         </div>
 
+                        <!-- Description -->
                         <div class="bg-cardbg border border-white/5 p-5 rounded-3xl space-y-3">
                             <h4 class="text-[11px] font-black text-white border-r-2 border-neonred pr-2">معلومات إضافية</h4>
                             <p id="det-desc" class="text-[10px] text-zinc-400 font-medium leading-relaxed whitespace-pre-wrap">لا توجد إضافات.</p>
                         </div>
 
+                        <!-- VIP Booking Form -->
                         <div id="booking-section" class="bg-gradient-to-b from-cardbg to-panelbg border border-white/10 p-6 rounded-3xl shadow-2xl relative overflow-hidden mt-6 transition-all duration-300">
                             <div id="booking-form-wrapper" class="relative z-10 block">
                                 <h3 class="text-sm font-black text-white mb-2 flex items-center gap-2">
@@ -536,7 +555,6 @@
                         <input type="hidden" id="form-car-id">
                         
                         <div class="grid grid-cols-2 gap-3">
-                            <!-- 🟢 3RD CATEGORY VARIANT ADDED HERE 🟢 -->
                             <select id="f-category" class="tech-input">
                                 <option value="disponible">متوفر في المعرض فقط</option>
                                 <option value="commande">استيراد بالطلب فقط</option>
@@ -616,8 +634,9 @@
             }
         }
         
+        // ================= ⚙️ إعدادات روابط التواصل ⚙️ =================
         const CONFIG = {
-            whatsappNumber: "213550927053",
+            whatsappNumber: "213770000000",
             googleScriptUrl: localStorage.getItem('digital_auto_script') || ""
         };
 
@@ -753,7 +772,6 @@
             
             let filtered = Array.isArray(state.vehicles) ? state.vehicles : [];
             
-            // 🟢 SMART 3-WAY FILTERING (shows 'both' in both categories) 🟢
             if(state.currentScope !== 'all') {
                 filtered = filtered.filter(v => v && (v.typeCategory === state.currentScope || v.typeCategory === 'both'));
             }
@@ -774,7 +792,6 @@
                 if(!car) return;
                 const isSold = car.status === 'vendu';
                 
-                // Tag styling for 3 categories
                 let tagColor = 'bg-white text-black';
                 let tagText = 'معرض';
                 if (car.typeCategory === 'commande') {
@@ -984,7 +1001,7 @@
             }, 600);
         }
 
-        // ================= ADMIN SYSTEM (MAX 20 IMAGES + HIGH RES) =================
+        // ================= ADMIN SYSTEM =================
         function openAdminAuth() {
             if(state.isOwnerSession) {
                 const adminCenter = document.getElementById('ownerCommandCenter');
@@ -1029,7 +1046,6 @@
             const files = e.target.files;
             if(!files || files.length === 0) return;
             
-            // 🟢 UPGRADED TO MAX 20 IMAGES 🟢
             const maxImages = Math.min(files.length, 20);
             state.tempImages = [];
             const container = document.getElementById('multi-img-preview-container');
@@ -1046,7 +1062,6 @@
             document.getElementById('f-image-label').innerText = `تمت جاهزية ${state.tempImages.length} صور بجودة عالية HD`;
         }
 
-        // 🟢 HIGH QUALITY COMPRESSION (800x800 - HIGH CRISP RES) 🟢
         function compressToSquare(file) {
             return new Promise(resolve => {
                 const reader = new FileReader();
